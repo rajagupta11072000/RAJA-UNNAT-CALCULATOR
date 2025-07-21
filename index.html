@@ -1,157 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Raja Unnat Calculator Toolkit</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raja Unnat Calculator</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app">
+  <div class="container">
     <aside class="sidebar">
-      <button data-panel="calc" class="active">🧮<span>Calculator</span></button>
-      <button data-panel="percent">%<span>Percentage</span></button>
-      <button data-panel="bmi">🧍<span>BMI</span></button>
-      <button data-panel="currency">💱<span>Currency</span></button>
-      <button data-panel="length">📏<span>Length</span></button>
-      <button data-panel="area">📐<span>Area</span></button>
-      <button data-panel="volume">🥤<span>Volume</span></button>
-      <button data-panel="weight">⚖️<span>Weight</span></button>
-      <button data-panel="temp">🌡<span>Temperature</span></button>
-      <button data-panel="time">⏱<span>Time</span></button>
-      <button data-panel="speed">🏎<span>Speed</span></button>
-      <button data-panel="data">💾<span>Data</span></button>
-      <button data-panel="pressure">🔵<span>Pressure</span></button>
-      <button data-panel="energy">⚡<span>Energy</span></button>
-      <button data-panel="angle">🔁<span>Angle</span></button>
+      <h1>🧮</h1>
+      <nav>
+        <button class="tab-button active" data-panel="calculator">🧮<span>Calculator</span></button>
+        <button class="tab-button" data-panel="bmi">🧍<span>BMI</span></button>
+        <button class="tab-button" data-panel="percent">%</button>
+        <button class="tab-button" data-panel="currency">💱</button>
+        <button class="tab-button" data-panel="length">📏</button>
+        <button class="tab-button" data-panel="area">📐</button>
+        <button class="tab-button" data-panel="volume">🥤</button>
+        <button class="tab-button" data-panel="weight">⚖️</button>
+        <button class="tab-button" data-panel="temp">🌡️</button>
+        <button class="tab-button" data-panel="time">⏱️</button>
+        <button class="tab-button" data-panel="speed">🏎️</button>
+        <button class="tab-button" data-panel="data">💾</button>
+        <button class="tab-button" data-panel="pressure">🔵</button>
+        <button class="tab-button" data-panel="energy">⚡</button>
+        <button class="tab-button" data-panel="angle">🔁</button>
+      </nav>
     </aside>
 
-    <main class="content">
-      <!-- Calculator -->
-      <section id="panel-calc" class="panel active">
-        <div class="calc-container">
-          <input id="display" class="display" type="text" autocomplete="off" autofocus />
-          <div id="btn-grid" class="buttons-grid"></div>
-        </div>
+    <main class="main-content">
+      <section id="calculator" class="panel active">
+        <input id="display" class="display" type="text" placeholder="0" readonly />
+        <div class="buttons" id="btn-grid"></div>
       </section>
 
-      <!-- Percentage -->
-      <section id="panel-percent" class="panel">
-        <h2>Percentage Calculator</h2>
-        <input id="perc-base" type="number" placeholder="Base">
-        <input id="perc-percent" type="number" placeholder="%">
-        <button id="calc-perc">Calculate</button>
-        <p>Result: <span id="perc-result">–</span></p>
-      </section>
-
-      <!-- BMI -->
-      <section id="panel-bmi" class="panel">
+      <!-- Other tool panels here -->
+      <section id="bmi" class="panel">
         <h2>BMI Calculator</h2>
-        <input id="bmi-weight" type="number" placeholder="Weight (kg)">
-        <input id="bmi-height" type="number" placeholder="Height (cm)">
+        <input id="bmi-weight" type="number" placeholder="Weight (kg)" />
+        <input id="bmi-height" type="number" placeholder="Height (cm)" />
         <button id="calc-bmi">Calculate</button>
         <p>Result: <span id="bmi-result">–</span></p>
       </section>
 
-      <!-- Currency -->
-      <section id="panel-currency" class="panel">
+      <section id="percent" class="panel">
+        <h2>Percentage Calculator</h2>
+        <input id="perc-base" type="number" placeholder="Base Value" />
+        <input id="perc-percent" type="number" placeholder="%" />
+        <button id="calc-perc">Calculate</button>
+        <p>Result: <span id="perc-result">–</span></p>
+      </section>
+
+      <section id="currency" class="panel">
         <h2>Currency Converter</h2>
-        <input id="curr-amount" type="number" placeholder="Amount">
+        <input id="curr-amount" type="number" placeholder="Amount" />
         <select id="curr-from"></select>
         <select id="curr-to"></select>
         <button id="calc-curr">Convert</button>
         <p>Result: <span id="curr-result">–</span></p>
       </section>
 
-      <!-- Unit converter template-->
-      <section class="panel conv-panel" id="panel-length">
-        <h2>Length Converter</h2>
-        <input id="length-in" type="number" placeholder="Value">
-        <select id="length-from"></select>
-        <select id="length-to"></select>
-        <button data-conv="length">Convert</button>
-        <p>Result: <span class="conv-out">–</span></p>
-      </section>
-      <section class="panel conv-panel" id="panel-area">
-        <h2>Area Converter</h2>
-        <input id="area-in" type="number" placeholder="Value">
-        <select id="area-from"></select>
-        <select id="area-to"></select>
-        <button data-conv="area">Convert</button>
-        <p>Result: <span class="conv-out">–</span></p>
-      </section>
-      <section class="panel conv-panel" id="panel-volume">
-        <h2>Volume Converter</h2>
-        <input id="volume-in" type="number" placeholder="Value">
-        <select id="volume-from"></select>
-        <select id="volume-to"></select>
-        <button data-conv="volume">Convert</button>
-        <p>Result: <span class="conv-out">–</span></p>
-      </section>
-      <section class="panel conv-panel" id="panel-weight">
-        <h2>Weight Converter</h2>
-        <input id="weight-in" type="number" placeholder="Value">
-        <select id="weight-from"></select>
-        <select id="weight-to"></select>
-        <button data-conv="weight">Convert</button>
-        <p>Result: <span class="conv-out">–</span></p>
-      </section>
-      <section class="panel conv-panel" id="panel-temp">
-        <h2>Temperature Converter</h2>
-        <input id="temp-in" type="number" placeholder="Value">
-        <select id="temp-from"></select>
-        <select id="temp-to"></select>
-        <button data-conv="temp">Convert</button>
-        <p>Result: <span class="conv-out">–</span></p>
-      </section>
-      <section class="panel conv-panel" id="panel-time">
-        <h2>Time Converter</h2>
-        <input id="time-in" type="number" placeholder="Value">
-        <select id="time-from"></select>
-        <select id="time-to"></select>
-        <button data-conv="time">Convert</button>
-        <p>Result: <span class="conv-out">–</span></p>
-      </section>
-      <section class="panel conv-panel" id="panel-speed">
-        <h2>Speed Converter</h2>
-        <input id="speed-in" type="number" placeholder="Value">
-        <select id="speed-from"></select>
-        <select id="speed-to"></select>
-        <button data-conv="speed">Convert</button>
-        <p>Result: <span class="conv-out">–</span></p>
-      </section>
-      <section class="panel conv-panel" id="panel-data">
-        <h2>Data Converter</h2>
-        <input id="data-in" type="number" placeholder="Value">
-        <select id="data-from"></select>
-        <select id="data-to"></select>
-        <button data-conv="data">Convert</button>
-        <p>Result: <span class="conv-out">–</span></p>
-      </section>
-      <section class="panel conv-panel" id="panel-pressure">
-        <h2>Pressure Converter</h2>
-        <input id="pressure-in" type="number" placeholder="Value">
-        <select id="pressure-from"></select>
-        <select id="pressure-to"></select>
-        <button data-conv="pressure">Convert</button>
-        <p>Result: <span class="conv-out">–</span></p>
-      </section>
-      <section class="panel conv-panel" id="panel-energy">
-        <h2>Energy Converter</h2>
-        <input id="energy-in" type="number" placeholder="Value">
-        <select id="energy-from"></select>
-        <select id="energy-to"></select>
-        <button data-conv="energy">Convert</button>
-        <p>Result: <span class="conv-out">–</span></p>
-      </section>
-      <section class="panel conv-panel" id="panel-angle">
-        <h2>Angle Converter</h2>
-        <input id="angle-in" type="number" placeholder="Value">
-        <select id="angle-from"></select>
-        <select id="angle-to"></select>
-        <button data-conv="angle">Convert</button>
-        <p>Result: <span class="conv-out">–</span></p>
-      </section>
+      <!-- Repeat same pattern for unit converters -->
+      <!-- Will include them in script.js for auto setup -->
+
     </main>
   </div>
   <script src="script.js"></script>
