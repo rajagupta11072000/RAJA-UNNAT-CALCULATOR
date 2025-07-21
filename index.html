@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raja Unnat Calculator</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    h2 { margin-top: 2rem; }
+    .section { margin-bottom: 2rem; }
+    input, button, select { margin: 5px; padding: 8px; }
+    .row { display: flex; align-items: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <h1>Raja Unnat Calculator</h1>
+
+  <!-- 1. Basic Calculator -->
+  <div class="section">
+    <h2>Basic Calculator</h2>
+    <input id="basic-display" type="text" readonly style="width: 200px;" />
+    <div id="basic-buttons"></div>
+  </div>
+
+  <!-- 2. Scientific Calculator -->
+  <div class="section">
+    <h2>Scientific Calculator</h2>
+    <input id="sci-display" type="text" readonly style="width: 200px;" />
+    <div id="sci-buttons"></div>
+  </div>
+
+  <!-- 3. Percentage Calculator -->
+  <div class="section">
+    <h2>Percentage Calculator</h2>
+    <div class="row">
+      <input id="perc-base" type="number" placeholder="Base value" />
+      <input id="perc-percent" type="number" placeholder="Percent (%)" />
+      <button id="calc-perc">Calculate</button>
+    </div>
+    <div>Result: <span id="perc-result">–</span></div>
+  </div>
+
+  <!-- 4. BMI Calculator -->
+  <div class="section">
+    <h2>BMI Calculator</h2>
+    <div class="row">
+      <input id="bmi-weight" type="number" placeholder="Weight (kg)" />
+      <input id="bmi-height" type="number" placeholder="Height (cm)" />
+      <button id="calc-bmi">Check BMI</button>
+    </div>
+    <div>Result: <span id="bmi-result">–</span></div>
+  </div>
+
+  <!-- 5. Currency Converter -->
+  <div class="section">
+    <h2>Currency Converter</h2>
+    <div class="row">
+      <select id="curr-from"><option value="USD">USD</option></select>
+      <select id="curr-to"><option value="INR">INR</option></select>
+      <input id="curr-amount" type="number" placeholder="Amount" />
+      <button id="calc-curr">Convert</button>
+    </div>
+    <div>Result: <span id="curr-result">–</span></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
