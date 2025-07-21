@@ -1,81 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Raja Unnat Calculator</title>
-<style>
-  body { margin:0; font-family:sans-serif; display:flex; height:100vh; }
-  .sidebar { width:80px; background:#0f172a; color:white; display:flex; flex-direction:column; align-items:center; padding-top:20px; }
-  .sidebar button { background:none; border:none; color:white; margin:10px 0; cursor:pointer; font-size:24px; }
-  .sidebar button.active { color:#38bdf8; }
-  .content { flex:1; background:#f3f4f6; padding:20px; box-sizing:border-box; overflow:auto; }
-  .panel { display:none; }
-  .panel.active { display:block; }
-  .calc-container { max-width:340px; margin:auto; background:#393e46; border-radius:12px; box-shadow:0 8px 16px rgba(0,0,0,0.5); overflow:hidden; }
-  .display { width:100%; height:80px; background:#00adb5; color:white; text-align:right; font-size:2rem; padding:10px; border:none; box-sizing:border-box; }
-  .buttons-grid { display:grid; grid-template-columns:repeat(5,1fr); grid-auto-rows:60px; }
-  .buttons-grid button { border:none; background:#222831; color:white; font-size:1.2rem; cursor:pointer; transition:background 0.2s; }
-  .buttons-grid button:hover { background:#393e46; }
-  .operator { background:#00adb5; }
-  .wide { grid-column:span 2; }
-  /* tools styling */
-  .tool { max-width:340px; margin:auto; background:white; padding:20px; border-radius:12px; box-shadow:0 4px 8px rgba(0,0,0,0.2); }
-  .tool input, .tool select, .tool button { width:100%; padding:10px; margin:10px 0; font-size:16px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Raja Unnat Calculator Toolkit</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="app">
+    <aside class="sidebar">
+      <button data-panel="calc" class="active">🧮<span>Calculator</span></button>
+      <button data-panel="percent">%<span>Percentage</span></button>
+      <button data-panel="bmi">🧍<span>BMI</span></button>
+      <button data-panel="currency">💱<span>Currency</span></button>
+      <button data-panel="length">📏<span>Length</span></button>
+      <button data-panel="area">📐<span>Area</span></button>
+      <button data-panel="volume">🥤<span>Volume</span></button>
+      <button data-panel="weight">⚖️<span>Weight</span></button>
+      <button data-panel="temp">🌡<span>Temperature</span></button>
+      <button data-panel="time">⏱<span>Time</span></button>
+      <button data-panel="speed">🏎<span>Speed</span></button>
+      <button data-panel="data">💾<span>Data</span></button>
+      <button data-panel="pressure">🔵<span>Pressure</span></button>
+      <button data-panel="energy">⚡<span>Energy</span></button>
+      <button data-panel="angle">🔁<span>Angle</span></button>
+    </aside>
 
-<div class="sidebar">
-  <button id="btn-calculator" class="active">🧮</button>
-  <button id="btn-percent">%</button>
-  <button id="btn-bmi">🧍</button>
-  <button id="btn-currency">💱</button>
-</div>
+    <main class="content">
+      <!-- Calculator -->
+      <section id="panel-calc" class="panel active">
+        <div class="calc-container">
+          <input id="display" class="display" type="text" autocomplete="off" autofocus />
+          <div id="btn-grid" class="buttons-grid"></div>
+        </div>
+      </section>
 
-<div class="content">
-  <!-- Calculator -->
-  <div class="panel active" id="panel-calculator">
-    <div class="calc-container">
-      <input id="display" class="display" type="text" autocomplete="off" autofocus />
-      <div class="buttons-grid" id="buttons-grid"></div>
-    </div>
+      <!-- Percentage -->
+      <section id="panel-percent" class="panel">
+        <h2>Percentage Calculator</h2>
+        <input id="perc-base" type="number" placeholder="Base">
+        <input id="perc-percent" type="number" placeholder="%">
+        <button id="calc-perc">Calculate</button>
+        <p>Result: <span id="perc-result">–</span></p>
+      </section>
+
+      <!-- BMI -->
+      <section id="panel-bmi" class="panel">
+        <h2>BMI Calculator</h2>
+        <input id="bmi-weight" type="number" placeholder="Weight (kg)">
+        <input id="bmi-height" type="number" placeholder="Height (cm)">
+        <button id="calc-bmi">Calculate</button>
+        <p>Result: <span id="bmi-result">–</span></p>
+      </section>
+
+      <!-- Currency -->
+      <section id="panel-currency" class="panel">
+        <h2>Currency Converter</h2>
+        <input id="curr-amount" type="number" placeholder="Amount">
+        <select id="curr-from"></select>
+        <select id="curr-to"></select>
+        <button id="calc-curr">Convert</button>
+        <p>Result: <span id="curr-result">–</span></p>
+      </section>
+
+      <!-- Unit converter template-->
+      <section class="panel conv-panel" id="panel-length">
+        <h2>Length Converter</h2>
+        <input id="length-in" type="number" placeholder="Value">
+        <select id="length-from"></select>
+        <select id="length-to"></select>
+        <button data-conv="length">Convert</button>
+        <p>Result: <span class="conv-out">–</span></p>
+      </section>
+      <section class="panel conv-panel" id="panel-area">
+        <h2>Area Converter</h2>
+        <input id="area-in" type="number" placeholder="Value">
+        <select id="area-from"></select>
+        <select id="area-to"></select>
+        <button data-conv="area">Convert</button>
+        <p>Result: <span class="conv-out">–</span></p>
+      </section>
+      <section class="panel conv-panel" id="panel-volume">
+        <h2>Volume Converter</h2>
+        <input id="volume-in" type="number" placeholder="Value">
+        <select id="volume-from"></select>
+        <select id="volume-to"></select>
+        <button data-conv="volume">Convert</button>
+        <p>Result: <span class="conv-out">–</span></p>
+      </section>
+      <section class="panel conv-panel" id="panel-weight">
+        <h2>Weight Converter</h2>
+        <input id="weight-in" type="number" placeholder="Value">
+        <select id="weight-from"></select>
+        <select id="weight-to"></select>
+        <button data-conv="weight">Convert</button>
+        <p>Result: <span class="conv-out">–</span></p>
+      </section>
+      <section class="panel conv-panel" id="panel-temp">
+        <h2>Temperature Converter</h2>
+        <input id="temp-in" type="number" placeholder="Value">
+        <select id="temp-from"></select>
+        <select id="temp-to"></select>
+        <button data-conv="temp">Convert</button>
+        <p>Result: <span class="conv-out">–</span></p>
+      </section>
+      <section class="panel conv-panel" id="panel-time">
+        <h2>Time Converter</h2>
+        <input id="time-in" type="number" placeholder="Value">
+        <select id="time-from"></select>
+        <select id="time-to"></select>
+        <button data-conv="time">Convert</button>
+        <p>Result: <span class="conv-out">–</span></p>
+      </section>
+      <section class="panel conv-panel" id="panel-speed">
+        <h2>Speed Converter</h2>
+        <input id="speed-in" type="number" placeholder="Value">
+        <select id="speed-from"></select>
+        <select id="speed-to"></select>
+        <button data-conv="speed">Convert</button>
+        <p>Result: <span class="conv-out">–</span></p>
+      </section>
+      <section class="panel conv-panel" id="panel-data">
+        <h2>Data Converter</h2>
+        <input id="data-in" type="number" placeholder="Value">
+        <select id="data-from"></select>
+        <select id="data-to"></select>
+        <button data-conv="data">Convert</button>
+        <p>Result: <span class="conv-out">–</span></p>
+      </section>
+      <section class="panel conv-panel" id="panel-pressure">
+        <h2>Pressure Converter</h2>
+        <input id="pressure-in" type="number" placeholder="Value">
+        <select id="pressure-from"></select>
+        <select id="pressure-to"></select>
+        <button data-conv="pressure">Convert</button>
+        <p>Result: <span class="conv-out">–</span></p>
+      </section>
+      <section class="panel conv-panel" id="panel-energy">
+        <h2>Energy Converter</h2>
+        <input id="energy-in" type="number" placeholder="Value">
+        <select id="energy-from"></select>
+        <select id="energy-to"></select>
+        <button data-conv="energy">Convert</button>
+        <p>Result: <span class="conv-out">–</span></p>
+      </section>
+      <section class="panel conv-panel" id="panel-angle">
+        <h2>Angle Converter</h2>
+        <input id="angle-in" type="number" placeholder="Value">
+        <select id="angle-from"></select>
+        <select id="angle-to"></select>
+        <button data-conv="angle">Convert</button>
+        <p>Result: <span class="conv-out">–</span></p>
+      </section>
+    </main>
   </div>
-
-  <!-- Percentage -->
-  <div class="panel" id="panel-percent">
-    <div class="tool">
-      <h2>Percentage Calculator</h2>
-      <input id="perc-base" type="number" placeholder="Base value" />
-      <input id="perc-percent" type="number" placeholder="Percent (%)" />
-      <button id="calc-perc">Calculate</button>
-      <div>Result: <span id="perc-result">–</span></div>
-    </div>
-  </div>
-
-  <!-- BMI -->
-  <div class="panel" id="panel-bmi">
-    <div class="tool">
-      <h2>BMI Calculator</h2>
-      <input id="bmi-weight" type="number" placeholder="Weight (kg)" />
-      <input id="bmi-height" type="number" placeholder="Height (cm)" />
-      <button id="calc-bmi">Calculate</button>
-      <div>Result: <span id="bmi-result">–</span></div>
-    </div>
-  </div>
-
-  <!-- Currency -->
-  <div class="panel" id="panel-currency">
-    <div class="tool">
-      <h2>Currency Converter</h2>
-      <input id="curr-amount" type="number" placeholder="Amount" />
-      <select id="curr-from"></select>
-      <select id="curr-to"></select>
-      <button id="calc-curr">Convert</button>
-      <div>Result: <span id="curr-result">–</span></div>
-    </div>
-  </div>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
