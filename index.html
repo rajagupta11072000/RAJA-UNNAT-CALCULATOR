@@ -1,130 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Raja Unnat Advanced Calculator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0; padding: 0;
-      background: #222831; color: #eeeeee;
-      font-family: 'Roboto Mono', monospace;
-      display: flex; justify-content: center; align-items: flex-start;
-      padding-top: 20px;
-    }
-    .calculator {
-      width: 340px; background: #393e46;
-      border-radius: 12px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-    .display {
-      width: 100%; height: 60px;
-      background: #00adb5; color: #eeeeee;
-      text-align: right; font-size: 1.8rem;
-      padding: 10px; box-sizing: border-box;
-      border: none;
-    }
-    .buttons-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr); grid-auto-rows: 50px;
-    }
-    button.theme, button.operator {
-      background: #00adb5; color: #eeeeee;
-    }
-    button {
-      border: none; font-size: 1.1rem;
-      color: #eeeeee; background: #222831;
-      outline: none; cursor: pointer;
-      transition: background 0.2s;
-    }
-    button:hover { background: #393e46; }
-    .wide { grid-column: span 2; }
-    .section-container {
-      width: 340px;
-      background: #393e46; border-radius: 12px;
-      color: #eeeeee; padding: 20px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-    }
-    .section { margin-bottom: 20px; }
-    .section h2 { margin-top: 0; }
-    input, select, button {
-      width: 100%; padding: 8px; margin: 5px 0;
-      font-size: 1rem;
-    }
-  </style>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Raja Unnat Calculator</title>
+<style>
+  body { margin:0; font-family:sans-serif; display:flex; height:100vh; }
+  .sidebar { width:80px; background:#0f172a; color:white; display:flex; flex-direction:column; align-items:center; padding-top:20px; }
+  .sidebar button { background:none; border:none; color:white; margin:10px 0; cursor:pointer; font-size:24px; }
+  .sidebar button.active { color:#38bdf8; }
+  .content { flex:1; background:#f3f4f6; padding:20px; box-sizing:border-box; overflow:auto; }
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .calc-container { max-width:340px; margin:auto; background:#393e46; border-radius:12px; box-shadow:0 8px 16px rgba(0,0,0,0.5); overflow:hidden; }
+  .display { width:100%; height:80px; background:#00adb5; color:white; text-align:right; font-size:2rem; padding:10px; border:none; box-sizing:border-box; }
+  .buttons-grid { display:grid; grid-template-columns:repeat(5,1fr); grid-auto-rows:60px; }
+  .buttons-grid button { border:none; background:#222831; color:white; font-size:1.2rem; cursor:pointer; transition:background 0.2s; }
+  .buttons-grid button:hover { background:#393e46; }
+  .operator { background:#00adb5; }
+  .wide { grid-column:span 2; }
+  /* tools styling */
+  .tool { max-width:340px; margin:auto; background:white; padding:20px; border-radius:12px; box-shadow:0 4px 8px rgba(0,0,0,0.2); }
+  .tool input, .tool select, .tool button { width:100%; padding:10px; margin:10px 0; font-size:16px; }
+</style>
 </head>
 <body>
 
-  <div class="calculator">
-    <input id="display" class="display" type="text" autocomplete="off" autofocus/>
-    <div class="buttons-grid">
-      <button data-key="(">(</button>
-      <button data-key=")">)</button>
-      <button data-key="sin(">sin</button>
-      <button data-key="cos(">cos</button>
-      <button data-key="tan(">tan</button>
+<div class="sidebar">
+  <button id="btn-calculator" class="active">🧮</button>
+  <button id="btn-percent">%</button>
+  <button id="btn-bmi">🧍</button>
+  <button id="btn-currency">💱</button>
+</div>
 
-      <button data-key="log(">log</button>
-      <button data-key="ln(">ln</button>
-      <button data-key="sqrt(">√</button>
-      <button data-key="^">^</button>
-      <button data-key="!"">!</button>
-
-      <button data-key="7">7</button>
-      <button data-key="8">8</button>
-      <button data-key="9">9</button>
-      <button class="operator" data-key="/">÷</button>
-      <button class="operator" data-key="*">×</button>
-
-      <button data-key="4">4</button>
-      <button data-key="5">5</button>
-      <button data-key="6">6</button>
-      <button class="operator" data-key="-">−</button>
-      <button class="operator" data-key="+">+</button>
-
-      <button data-key="1">1</button>
-      <button data-key="2">2</button>
-      <button data-key="3">3</button>
-      <button data-key=".">.</button>
-      <button class="wide operator" id="equals">=</button>
-
-      <button class="wide" id="clear">C</button>
-      <button class="wide" id="back">⌫</button>
+<div class="content">
+  <!-- Calculator -->
+  <div class="panel active" id="panel-calculator">
+    <div class="calc-container">
+      <input id="display" class="display" type="text" autocomplete="off" autofocus />
+      <div class="buttons-grid" id="buttons-grid"></div>
     </div>
   </div>
 
-  <div class="section-container">
-    
-    <div class="section">
+  <!-- Percentage -->
+  <div class="panel" id="panel-percent">
+    <div class="tool">
       <h2>Percentage Calculator</h2>
-      <input id="perc-base" type="number" placeholder="Base value">
-      <input id="perc-percent" type="number" placeholder="Percent">
+      <input id="perc-base" type="number" placeholder="Base value" />
+      <input id="perc-percent" type="number" placeholder="Percent (%)" />
       <button id="calc-perc">Calculate</button>
       <div>Result: <span id="perc-result">–</span></div>
     </div>
+  </div>
 
-    <div class="section">
+  <!-- BMI -->
+  <div class="panel" id="panel-bmi">
+    <div class="tool">
       <h2>BMI Calculator</h2>
-      <input id="bmi-weight" type="number" placeholder="Weight (kg)">
-      <input id="bmi-height" type="number" placeholder="Height (cm)">
+      <input id="bmi-weight" type="number" placeholder="Weight (kg)" />
+      <input id="bmi-height" type="number" placeholder="Height (cm)" />
       <button id="calc-bmi">Calculate</button>
       <div>Result: <span id="bmi-result">–</span></div>
     </div>
+  </div>
 
-    <div class="section">
+  <!-- Currency -->
+  <div class="panel" id="panel-currency">
+    <div class="tool">
       <h2>Currency Converter</h2>
-      <input id="curr-amount" type="number" placeholder="Amount">
+      <input id="curr-amount" type="number" placeholder="Amount" />
       <select id="curr-from"></select>
       <select id="curr-to"></select>
       <button id="calc-curr">Convert</button>
       <div>Result: <span id="curr-result">–</span></div>
     </div>
-
   </div>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
