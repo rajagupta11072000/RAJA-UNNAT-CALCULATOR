@@ -13,8 +13,8 @@ const bDiv = document.getElementById('basic-buttons');
   const b = document.createElement('button');
   b.innerText = c;
   b.onclick = () => {
-    if(c==='=') calcBasic();
-    else if(c==='C') clearBasic();
+    if(c === '=') calcBasic();
+    else if(c === 'C') clearBasic();
     else addBasic(c);
   };
   bDiv.append(b);
@@ -38,16 +38,16 @@ function clearSci() { sciExp = ''; sciDisplay.value = ''; }
 
 ['Math.sin(','Math.cos(','Math.tan(','Math.log(','Math.sqrt','**')].forEach(c => {
   const b = document.createElement('button');
-  b.innerText = c.replace('Math.', '');
-  b.onclick = () => addSci(c);
+  b.innerText = c.includes('Math.') ? c.replace('Math.', '').replace('(','') : c;
+  b.onclick = () => addSci(c.includes('Math.') ? c + ')' : c);
   document.getElementById('sci-buttons').append(b);
 });
 ['7','8','9','+','4','5','6','-','1','2','3','*','.','=','/','C'].forEach(c => {
   const b = document.createElement('button');
   b.innerText = c;
   b.onclick = () => {
-    if(c==='=') calcSci();
-    else if(c==='C') clearSci();
+    if(c === '=') calcSci();
+    else if(c === 'C') clearSci();
     else addSci(c);
   };
   document.getElementById('sci-buttons').append(b);
@@ -74,7 +74,7 @@ document.getElementById('calc-bmi').onclick = () => {
 
 // --- Currency Converter ---
 (async () => {
-  const key = '7b46c9d6348fe49e3acccd34';
+  const key = '7b46c9d6348fe49e3acccd34'; // Your API key
   const resp = await fetch(`https://v6.exchangerate-api.com/v6/${key}/latest/USD`);
   const json = await resp.json();
   const rates = json.conversion_rates;
