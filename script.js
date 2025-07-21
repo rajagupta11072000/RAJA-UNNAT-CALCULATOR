@@ -36,9 +36,9 @@ function calcSci() {
 }
 function clearSci() { sciExp = ''; sciDisplay.value = ''; }
 
-['sin(','cos(','tan(','Math.log(','Math.sqrt(','')].forEach(c => {
+['Math.sin(','Math.cos(','Math.tan(','Math.log(','Math.sqrt(','**')].forEach(c => {
   const b = document.createElement('button');
-  b.innerText = c;
+  b.innerText = c.replace('Math.', '');
   b.onclick = () => addSci(c);
   document.getElementById('sci-buttons').append(b);
 });
@@ -69,13 +69,13 @@ document.getElementById('calc-bmi').onclick = () => {
   let cat = bmi < 18.5 ? 'Underweight' :
             bmi < 25 ? 'Normal' :
             bmi < 30 ? 'Overweight' : 'Obese';
-  document.getElementById('bmi-result').innerText = isNaN(bmi) ? 'Error' : ${bmi} (${cat});
+  document.getElementById('bmi-result').innerText = isNaN(bmi) ? 'Error' : `${bmi} (${cat})`;
 };
 
 // --- Currency Converter ---
 (async () => {
-  const key = '7b46c9d6348fe49e3acccd34'; // Your real API key
-  const resp = await fetch(https://v6.exchangerate-api.com/v6/${key}/latest/USD);
+  const key = '7b46c9d6348fe49e3acccd34';
+  const resp = await fetch(`https://v6.exchangerate-api.com/v6/${key}/latest/USD`);
   const json = await resp.json();
   const rates = json.conversion_rates;
   const from = document.getElementById('curr-from');
@@ -88,11 +88,11 @@ document.getElementById('calc-bmi').onclick = () => {
     const a = parseFloat(document.getElementById('curr-amount').value);
     const f = from.value;
     const t = to.value;
-    if(isNaN(a)) {
+    if (isNaN(a)) {
       document.getElementById('curr-result').innerText = 'Error';
       return;
     }
     const res = (a * rates[t] / rates[f]).toFixed(4);
-    document.getElementById('curr-result').innerText = res;
-  };
+    document.getElementById('curr-result').innerText = res;
+  };
 })();
