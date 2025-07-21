@@ -2,67 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Raja Unnat Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
   <style>
-    body { font-family: sans-serif; padding: 20px; }
-    h2 { margin-top: 2rem; }
-    .section { margin-bottom: 2rem; }
-    input, button, select { margin: 5px; padding: 8px; }
-    .row { display: flex; align-items: center; flex-wrap: wrap; }
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0; padding: 0;
+      background: #f3f4f6;
+    }
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: #1e293b;
+    }
+    .menu button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      background: #38bdf8;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .section {
+      display: none;
+      padding: 20px;
+    }
+    .active {
+      display: block;
+    }
+    input, select, button {
+      margin: 5px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      gap: 10px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .buttons-grid button {
+      padding: 15px;
+      font-size: 18px;
+      background: #e2e8f0;
+      border: 1px solid #cbd5e1;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <h1>Raja Unnat Calculator</h1>
+  <header>Raja Unnat Calculator</header>
+  <div class="menu">
+    <button onclick="showSection('basic')">Basic</button>
+    <button onclick="showSection('sci')">Scientific</button>
+    <button onclick="showSection('perc')">Percentage</button>
+    <button onclick="showSection('bmi')">BMI</button>
+    <button onclick="showSection('curr')">Currency</button>
+  </div>
 
-  <!-- 1. Basic Calculator -->
-  <div class="section">
+  <!-- Basic Calculator -->
+  <div class="section" id="basic">
     <h2>Basic Calculator</h2>
-    <input id="basic-display" type="text" readonly style="width: 200px;" />
-    <div id="basic-buttons"></div>
+    <input id="basic-display" type="text" readonly />
+    <div class="buttons-grid" id="basic-buttons"></div>
   </div>
 
-  <!-- 2. Scientific Calculator -->
-  <div class="section">
+  <!-- Scientific Calculator -->
+  <div class="section" id="sci">
     <h2>Scientific Calculator</h2>
-    <input id="sci-display" type="text" readonly style="width: 200px;" />
-    <div id="sci-buttons"></div>
+    <input id="sci-display" type="text" readonly />
+    <div class="buttons-grid" id="sci-buttons"></div>
   </div>
 
-  <!-- 3. Percentage Calculator -->
-  <div class="section">
+  <!-- Percentage Calculator -->
+  <div class="section" id="perc">
     <h2>Percentage Calculator</h2>
-    <div class="row">
-      <input id="perc-base" type="number" placeholder="Base value" />
-      <input id="perc-percent" type="number" placeholder="Percent (%)" />
-      <button id="calc-perc">Calculate</button>
-    </div>
+    <input id="perc-base" type="number" placeholder="Base value" />
+    <input id="perc-percent" type="number" placeholder="Percent" />
+    <button id="calc-perc">Calculate</button>
     <div>Result: <span id="perc-result">–</span></div>
   </div>
 
-  <!-- 4. BMI Calculator -->
-  <div class="section">
+  <!-- BMI Calculator -->
+  <div class="section" id="bmi">
     <h2>BMI Calculator</h2>
-    <div class="row">
-      <input id="bmi-weight" type="number" placeholder="Weight (kg)" />
-      <input id="bmi-height" type="number" placeholder="Height (cm)" />
-      <button id="calc-bmi">Check BMI</button>
-    </div>
+    <input id="bmi-weight" type="number" placeholder="Weight (kg)" />
+    <input id="bmi-height" type="number" placeholder="Height (cm)" />
+    <button id="calc-bmi">Calculate</button>
     <div>Result: <span id="bmi-result">–</span></div>
   </div>
 
-  <!-- 5. Currency Converter -->
-  <div class="section">
+  <!-- Currency Converter -->
+  <div class="section" id="curr">
     <h2>Currency Converter</h2>
-    <div class="row">
-      <select id="curr-from"><option value="USD">USD</option></select>
-      <select id="curr-to"><option value="INR">INR</option></select>
-      <input id="curr-amount" type="number" placeholder="Amount" />
-      <button id="calc-curr">Convert</button>
-    </div>
+    <input id="curr-amount" type="number" placeholder="Amount" />
+    <select id="curr-from"></select>
+    <select id="curr-to"></select>
+    <button id="calc-curr">Convert</button>
     <div>Result: <span id="curr-result">–</span></div>
   </div>
 
   <script src="script.js"></script>
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+    showSection('basic');
+  </script>
 </body>
 </html>
