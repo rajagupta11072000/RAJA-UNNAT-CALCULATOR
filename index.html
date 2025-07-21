@@ -8,7 +8,8 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       background: #f3f4f6;
     }
     header {
@@ -62,6 +63,9 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    input[type="text"] {
+      width: 260px;
+    }
   </style>
 </head>
 <body>
@@ -77,14 +81,14 @@
   <!-- Basic Calculator -->
   <div class="section" id="basic">
     <h2>Basic Calculator</h2>
-    <input id="basic-display" type="text" readonly />
+    <input id="basic-display" type="text" />
     <div class="buttons-grid" id="basic-buttons"></div>
   </div>
 
   <!-- Scientific Calculator -->
   <div class="section" id="sci">
     <h2>Scientific Calculator</h2>
-    <input id="sci-display" type="text" readonly />
+    <input id="sci-display" type="text" />
     <div class="buttons-grid" id="sci-buttons"></div>
   </div>
 
