@@ -1,74 +1,83 @@
-// Advanced Calculator logic
+// Side-menu toggle
+const sections = { calculator: 'panel-calculator', percent: 'panel-percent', bmi: 'panel-bmi', currency: 'panel-currency' };
+function setActive(key) {
+  document.querySelectorAll('.sidebar button').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('btn-'+key).classList.add('active');
+  document.getElementById('panel-'+key).classList.add('active');
+}
+Object.keys(sections).forEach(key => document.getElementById('btn-'+key).onclick = () => setActive(key));
+
+// --- Calculator Logic ---
 const display = document.getElementById('display');
-const buttons = document.querySelectorAll('.buttons-grid button');
-
-display.addEventListener('keydown', e => {
-  if (!/[0-9+\-/*().^%!]/.test(e.key) && e.key !== 'Enter' && e.key !== 'Backspace') e.preventDefault();
-  if (e.key === 'Enter') calc();
-});
-buttons.forEach(btn => btn.addEventListener('click', () => {
-  const k = btn.dataset.key;
-  if (k) display.value += k;
+const grid = document.getElementById('buttons-grid');
+const keys = [
+  ['(',' )','sin(','cos(','tan('],
+  ['log(','ln(','√','^','!'],
+  ['7','8','9','÷','×'],
+  ['4','5','6','−','+'],
+  ['1','2','3','.','='],
+  ['0','C','⌫']
+];
+keys.forEach(row => row.forEach(k => {
+  const b = document.createElement('button');
+  b.textContent = k;
+  if (['÷','×','−','+','^','sin(','cos(','tan(','log(','ln(','√','!','='].includes(k)) b.classList.add('operator');
+  if (k==='='||k==='C'||k==='⌫') b.classList.add('wide');
+  b.onclick = () => {
+    if (k==='=') calc(); 
+    else if (k==='C') display.value='';
+    else if (k==='⌫') display.value=display.value.slice(0,-1);
+    else display.value += k;
+  };
+  grid.append(b);
 }));
-document.getElementById('equals').onclick = calc;
-document.getElementById('clear').onclick = () => display.value = '';
-document.getElementById('back').onclick = () => display.value = display.value.slice(0, -1);
+display.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); calc(); }
+});
 
+// Evaluate
 function calc() {
   try {
     let expr = display.value
-      .replace(/÷/g,'/').replace(/×/g,'*')
-      .replace(/sin\(/g,'Math.sin(').replace(/cos\(/g,'Math.cos(')
-      .replace(/tan\(/g,'Math.tan(').replace(/log\(/g,'Math.log10(')
-      .replace(/ln\(/g,'Math.log(').replace(/√/g,'Math.sqrt(')
-      .replace(/\^/g,'**').replace(/(\d+)!/g,'factorial($1)');
-    const r = Function('"use strict";return ('+expr+')')();
-    display.value = r;
+      .replace(/÷/g,'/').replace(/×/g,'*').replace(/−/g,'-')
+      .replace(/sin\(/g,'Math.sin(').replace(/cos\(/g,'Math.cos(').replace(/tan\(/g,'Math.tan(')
+      .replace(/log\(/g,'Math.log10(').replace(/ln\(/g,'Math.log(').replace(/√/g,'Math.sqrt(')
+      .replace(/\^/g,'**')
+      .replace(/(\d+)!/g,'factorial($1)');
+    display.value = Function('"use strict";return('+expr+')')();
   } catch { display.value = 'Error'; }
 }
-
-function factorial(n) {
-  if (n < 0) return NaN;
-  let res = 1;
-  for (let i = 1; i <= n; i++) res *= i;
-  return res;
-}
+function factorial(n) { return n<2?1:n*factorial(n-1); }
 
 // Percentage
 document.getElementById('calc-perc').onclick = () => {
-  const b = parseFloat(document.getElementById('perc-base').value);
-  const p = parseFloat(document.getElementById('perc-percent').value);
-  const res = (b * p / 100).toFixed(2);
-  document.getElementById('perc-result').innerText = isNaN(res) ? 'Error' : res;
+  let b=parseFloat(document.getElementById('perc-base').value),
+      p=parseFloat(document.getElementById('perc-percent').value),
+      r=(b*p/100).toFixed(2);
+  document.getElementById('perc-result').textContent = isNaN(r)?'Error':r;
 };
 
 // BMI
 document.getElementById('calc-bmi').onclick = () => {
-  const w = parseFloat(document.getElementById('bmi-weight').value);
-  const h = parseFloat(document.getElementById('bmi-height').value)/100;
-  const bmi = (w/(h*h)).toFixed(2);
-  const cat = bmi < 18.5 ? 'Underweight' : bmi < 25 ? 'Normal' : bmi < 30 ? 'Overweight' : 'Obese';
-  document.getElementById('bmi-result').innerText = isNaN(bmi) ? 'Error' : `${bmi} (${cat})`;
+  let w=parseFloat(document.getElementById('bmi-weight').value),
+      h=parseFloat(document.getElementById('bmi-height').value)/100,
+      bmi=(w/(h*h)).toFixed(2),
+      cat=bmi<18.5?'Underweight':bmi<25?'Normal':bmi<30?'Overweight':'Obese';
+  document.getElementById('bmi-result').textContent = isNaN(bmi)?'Error':`${bmi} (${cat})`;
 };
 
 // Currency
-(async () => {
-  const key = '7b46c9d6348fe49e3acccd34';
-  const resp = await fetch(`https://v6.exchangerate-api.com/v6/${key}/latest/USD`);
-  const json = await resp.json();
-  const rates = json.conversion_rates;
-  const from = document.getElementById('curr-from');
-  const to = document.getElementById('curr-to');
-  
-  Object.keys(rates).forEach(c => {
-    from.add(new Option(c,c));
-    to.add(new Option(c,c));
-  });
-  
+(async()=>{
+  const key='7b46c9d6348fe49e3acccd34';
+  const res=await fetch(`https://v6.exchangerate-api.com/v6/${key}/latest/USD`);
+  const {conversion_rates:rates}=await res.json();
+  const from=document.getElementById('curr-from'),to=document.getElementById('curr-to');
+  Object.keys(rates).forEach(c=>{from.append(new Option(c,c));to.append(new Option(c,c));});
   document.getElementById('calc-curr').onclick = () => {
-    const a = parseFloat(document.getElementById('curr-amount').value);
-    const f = from.value, t = to.value;
-    const res = isNaN(a) ? 'Error' : (a * rates[t] / rates[f]).toFixed(4);
-    document.getElementById('curr-result').innerText = res;
+    let a=parseFloat(document.getElementById('curr-amount').value),
+        f=from.value, t=to.value,
+        r=(a * rates[t] / rates[f]).toFixed(4);
+    document.getElementById('curr-result').textContent = isNaN(r)?'Error':r;
   };
 })();
