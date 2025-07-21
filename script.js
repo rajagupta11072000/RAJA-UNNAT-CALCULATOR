@@ -36,7 +36,7 @@ function calcSci() {
 }
 function clearSci() { sciExp = ''; sciDisplay.value = ''; }
 
-['Math.sin(','Math.cos(','Math.tan(','Math.log(','Math.sqrt(','**')].forEach(c => {
+['Math.sin(','Math.cos(','Math.tan(','Math.log(','Math.sqrt','**')].forEach(c => {
   const b = document.createElement('button');
   b.innerText = c.replace('Math.', '');
   b.onclick = () => addSci(c);
