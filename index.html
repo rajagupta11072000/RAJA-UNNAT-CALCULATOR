@@ -9,23 +9,23 @@
 <body>
   <div class="container">
     <aside class="sidebar">
-      <h1>🧮</h1>
-      <nav>
-        <button class="tab-button active" data-panel="calculator">🧮<span>Calculator</span></button>
-        <button class="tab-button" data-panel="bmi">🧍<span>BMI</span></button>
-        <button class="tab-button" data-panel="percent">%</button>
-        <button class="tab-button" data-panel="currency">💱</button>
-        <button class="tab-button" data-panel="length">📏</button>
-        <button class="tab-button" data-panel="area">📐</button>
-        <button class="tab-button" data-panel="volume">🥤</button>
-        <button class="tab-button" data-panel="weight">⚖️</button>
-        <button class="tab-button" data-panel="temp">🌡️</button>
-        <button class="tab-button" data-panel="time">⏱️</button>
-        <button class="tab-button" data-panel="speed">🏎️</button>
-        <button class="tab-button" data-panel="data">💾</button>
-        <button class="tab-button" data-panel="pressure">🔵</button>
-        <button class="tab-button" data-panel="energy">⚡</button>
-        <button class="tab-button" data-panel="angle">🔁</button>
+      <div class="logo">🧮</div>
+      <nav class="nav">
+        <button class="tab-button active" data-panel="calculator"><span>🧮</span><label>Calculator</label></button>
+        <button class="tab-button" data-panel="bmi"><span>🧍</span><label>BMI</label></button>
+        <button class="tab-button" data-panel="percent"><span>%</span><label>Percent</label></button>
+        <button class="tab-button" data-panel="currency"><span>💱</span><label>Currency</label></button>
+        <button class="tab-button" data-panel="length"><span>📏</span><label>Length</label></button>
+        <button class="tab-button" data-panel="area"><span>📐</span><label>Area</label></button>
+        <button class="tab-button" data-panel="volume"><span>🥤</span><label>Volume</label></button>
+        <button class="tab-button" data-panel="weight"><span>⚖️</span><label>Weight</label></button>
+        <button class="tab-button" data-panel="temp"><span>🌡️</span><label>Temp</label></button>
+        <button class="tab-button" data-panel="time"><span>⏱️</span><label>Time</label></button>
+        <button class="tab-button" data-panel="speed"><span>🏎️</span><label>Speed</label></button>
+        <button class="tab-button" data-panel="data"><span>💾</span><label>Data</label></button>
+        <button class="tab-button" data-panel="pressure"><span>🔵</span><label>Pressure</label></button>
+        <button class="tab-button" data-panel="energy"><span>⚡</span><label>Energy</label></button>
+        <button class="tab-button" data-panel="angle"><span>🔁</span><label>Angle</label></button>
       </nav>
     </aside>
 
@@ -35,7 +35,7 @@
         <div class="buttons" id="btn-grid"></div>
       </section>
 
-      <!-- Other tool panels here -->
+      <!-- BMI -->
       <section id="bmi" class="panel">
         <h2>BMI Calculator</h2>
         <input id="bmi-weight" type="number" placeholder="Weight (kg)" />
@@ -44,6 +44,7 @@
         <p>Result: <span id="bmi-result">–</span></p>
       </section>
 
+      <!-- Percentage -->
       <section id="percent" class="panel">
         <h2>Percentage Calculator</h2>
         <input id="perc-base" type="number" placeholder="Base Value" />
@@ -52,6 +53,7 @@
         <p>Result: <span id="perc-result">–</span></p>
       </section>
 
+      <!-- Currency -->
       <section id="currency" class="panel">
         <h2>Currency Converter</h2>
         <input id="curr-amount" type="number" placeholder="Amount" />
@@ -61,9 +63,7 @@
         <p>Result: <span id="curr-result">–</span></p>
       </section>
 
-      <!-- Repeat same pattern for unit converters -->
-      <!-- Will include them in script.js for auto setup -->
-
+      <!-- Dynamic unit converter sections -->
     </main>
   </div>
   <script src="script.js"></script>
