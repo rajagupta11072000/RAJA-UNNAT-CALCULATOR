@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Raja Unnat Calculator + Tools</title>
+  <title>Raja Unnat Calculator Pro</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -12,6 +12,7 @@
       <div class="logo">🧮</div>
       <nav class="nav">
         <button class="tab-button active" data-panel="calculator"><span>🧮</span><label>Calc</label></button>
+        <button class="tab-button" data-panel="scientific"><span>🔬</span><label>Science</label></button>
         <button class="tab-button" data-panel="bmi"><span>⚖</span><label>BMI</label></button>
         <button class="tab-button" data-panel="percentage"><span>%</span><label>Percent</label></button>
         <button class="tab-button" data-panel="currency"><span>💱</span><label>Currency</label></button>
@@ -37,10 +38,16 @@
       </nav>
     </aside>
     <main class="main-content">
+      <!-- Core Panels -->
       <section id="calculator" class="panel active">
         <input id="display" class="display" readonly placeholder="0"/>
         <div id="btn-grid" class="buttons"></div>
       </section>
+      <section id="scientific" class="panel">
+        <input id="sci-display" class="display" readonly placeholder=""/>
+        <div id="sci-buttons" class="buttons"></div>
+      </section>
+      <!-- Utility -->
       <section id="bmi" class="panel"><h2>BMI</h2><div class="calc-grid"><input id="bmi-weight" placeholder="Weight kg"><input id="bmi-height" placeholder="Height cm"><button id="calc-bmi">Calc</button><p id="bmi-result">–</p></div></section>
       <section id="percentage" class="panel"><h2>Percent</h2><div class="calc-grid"><input id="perc-base" placeholder="Base"><input id="perc-percent" placeholder="%"><button id="calc-perc">Calc</button><p id="perc-result">–</p></div></section>
       <section id="currency" class="panel"><h2>Currency</h2><div class="calc-grid"><input id="curr-amount" placeholder="Amount"><select id="curr-from"></select><select id="curr-to"></select><button id="calc-curr">Convert</button><p id="curr-result">–</p></div></section>
