@@ -1,60 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Raja Unnat Calculator</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <div class="container">
     <aside class="sidebar">
       <div class="logo">🧮</div>
-      <div class="nav">
-        <button class="tab-button active" data-panel="calculator"><span>🧮</span><label>Calculator</label></button>
-        <button class="tab-button" data-panel="bmi"><span>⚖</span><label>BMI</label></button>
-        <button class="tab-button" data-panel="percentage"><span>%</span><label>Percent</label></button>
-        <button class="tab-button" data-panel="currency"><span>💱</span><label>Currency</label></button>
-        <button class="tab-button" data-panel="length"><span>📏</span><label>Length</label></button>
-        <button class="tab-button" data-panel="area"><span>📐</span><label>Area</label></button>
-        <button class="tab-button" data-panel="volume"><span>🥤</span><label>Volume</label></button>
-        <button class="tab-button" data-panel="weight"><span>🏋️‍♂️</span><label>Weight</label></button>
-        <button class="tab-button" data-panel="temp"><span>🌡️</span><label>Temp</label></button>
-        <button class="tab-button" data-panel="time"><span>⏱</span><label>Time</label></button>
-        <button class="tab-button" data-panel="speed"><span>🚗</span><label>Speed</label></button>
-        <button class="tab-button" data-panel="data"><span>💾</span><label>Data</label></button>
-        <button class="tab-button" data-panel="pressure"><span>🌬</span><label>Pressure</label></button>
-        <button class="tab-button" data-panel="energy"><span>⚡</span><label>Energy</label></button>
-        <button class="tab-button" data-panel="angle"><span>📐</span><label>Angle</label></button>
-      </div>
+      <nav class="nav">
+        <button class="tab-button active" data-panel="calculator">
+          <span>🧮</span><label>Calculator</label>
+        </button>
+        <!-- Repeat for each -->
+        <button class="tab-button" data-panel="bmi">
+          <span>⚖</span><label>BMI</label>
+        </button>
+        <button class="tab-button" data-panel="percentage">
+          <span>%</span><label>Percent</label>
+        </button>
+        <button class="tab-button" data-panel="currency">
+          <span>💱</span><label>Currency</label>
+        </button>
+        <!-- Add any other if needed -->
+      </nav>
     </aside>
-
     <main class="main-content">
       <section id="calculator" class="panel active">
-        <input id="display" class="display" placeholder="0" readonly />
+        <input id="display" class="display" placeholder="0" readonly/>
         <div class="buttons" id="btn-grid"></div>
       </section>
-
       <section id="bmi" class="panel">
         <h2>BMI Calculator</h2>
-        <input type="number" id="bmi-weight" placeholder="Weight in kg" />
-        <input type="number" id="bmi-height" placeholder="Height in cm" />
+        <input type="number" id="bmi-weight" placeholder="Weight in kg"/>
+        <input type="number" id="bmi-height" placeholder="Height in cm"/>
         <button id="calc-bmi">Calculate</button>
         <p id="bmi-result">–</p>
       </section>
-
       <section id="percentage" class="panel">
         <h2>Percentage Calculator</h2>
-        <input type="number" id="perc-base" placeholder="Base value" />
-        <input type="number" id="perc-percent" placeholder="Percentage (%)" />
+        <input type="number" id="perc-base" placeholder="Base value"/>
+        <input type="number" id="perc-percent" placeholder="Percentage (%)"/>
         <button id="calc-perc">Calculate</button>
         <p id="perc-result">–</p>
       </section>
-
       <section id="currency" class="panel">
         <h2>Currency Converter</h2>
-        <input type="number" id="curr-amount" placeholder="Amount" />
-        <select id="curr-from"></select><select id="curr-to"></select>
+        <input type="number" id="curr-amount" placeholder="Amount"/>
+        <select id="curr-from"></select>
+        <select id="curr-to"></select>
         <button id="calc-curr">Convert</button>
         <p id="curr-result">–</p>
       </section>
