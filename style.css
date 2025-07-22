@@ -1,154 +1,25 @@
-/* Reset and base */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #0f172a;
-  color: #f1f5f9;
-  height: 100vh;
-  display: flex;
-}
-.container {
-  display: flex;
-  width: 100%;
-}
-
-/* Sidebar */
-.sidebar {
-  width: 90px;
-  background: #1e293b;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 10px;
-}
-.logo {
-  font-size: 2.5rem;
-  color: #38bdf8;
-  margin-bottom: 10px;
-}
-.nav {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.tab-button {
-  background: none;
-  border: none;
-  color: #94a3b8;
-  cursor: pointer;
-  font-size: 22px;
-  text-align: center;
-  padding: 8px 4px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: 0.3s;
-}
-.tab-button label {
-  font-size: 10px;
-  margin-top: 2px;
-}
-.tab-button.active,
-.tab-button:hover {
-  color: #38bdf8;
-}
-
-/* Main Content */
-.main-content {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-}
-.panel {
-  display: none;
-}
-.panel.active {
-  display: block;
-}
-
-/* Calculator display */
-.display {
-  width: 100%;
-  padding: 15px;
-  font-size: 1.8rem;
-  border: none;
-  border-radius: 8px;
-  background: #1e293b;
-  color: #38bdf8;
-  margin-bottom: 10px;
-}
-.buttons {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-}
-.buttons button {
-  padding: 15px;
-  font-size: 1.2rem;
-  background: #334155;
-  color: #f1f5f9;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.buttons button:hover {
-  background: #475569;
-}
-button.operator {
-  background: #06b6d4;
-  color: white;
-}
-button.operator:hover {
-  background: #0891b2;
-}
-
-/* Panel Input Sections */
-.panel input,
-.panel select,
-.panel button {
-  width: 100%;
-  margin: 8px 0;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-.panel button {
-  background: #22d3ee;
-  color: black;
-  cursor: pointer;
-}
-.panel button:hover {
-  background: #06b6d4;
-}
-.panel p {
-  margin-top: 10px;
-  font-size: 1.1rem;
-}
-
-/* Responsive layout */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-  .sidebar {
-    flex-direction: row;
-    width: 100%;
-    overflow-x: auto;
-    justify-content: space-around;
-  }
-  .tab-button {
-    font-size: 16px;
-  }
-  .tab-button label {
-    font-size: 8px;
-  }
-  .buttons {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{display:flex;font-family:'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;}
+.container{flex:1;display:flex;flex-direction:row;}
+.sidebar{background:#1e293b;width:90px;padding-top:10px;display:flex;flex-direction:column;align-items:center;}
+.logo{font-size:2.5rem;color:#38bdf8;margin-bottom:10px;}
+.nav{display:flex;flex-direction:column;gap:10px;overflow-y:auto;}
+.tab-button{background:none;border:none;color:#94a3b8;font-size:22px;text-align:center;padding:8px 4px;display:flex;flex-direction:column;align-items:center;transition:0.3s;min-width:72px;}
+.tab-button label{font-size:10px;margin-top:2px;}
+.tab-button.active,.tab-button:hover{color:#38bdf8;}
+.main-content{flex:1;padding:20px;overflow-y:auto;}
+.panel{display:none;}
+.panel.active{display:block;}
+.display{width:100%;padding:15px;font-size:1.8rem;border:none;border-radius:8px;background:#1e293b;color:#38bdf8;margin-bottom:10px;}
+.buttons{display:grid;gap:10px;}
+.buttons button{padding:15px;font-size:1.2rem;background:#334155;color:#f1f5f9;border:none;border-radius:8px;cursor:pointer;transition:0.2s;}
+.buttons button:hover{background:#475569;}
+button.operator{background:#06b6d4;color:white;}
+button.operator:hover{background:#0891b2;}
+.panel input,.panel select,.panel button{width:100%;margin:8px 0;padding:10px;border:none;border-radius:6px;font-size:1rem;}
+.panel button{background:#22d3ee;color:black;cursor:pointer;}
+.panel button:hover{background:#06b6d4;}
+.panel p{margin-top:10px;font-size:1.1rem;}
+@media(max-width:768px){.container{flex-direction:column;}.sidebar{flex-direction:row;width:100%;height:72px;overflow-x:auto;overflow-y:hidden;}.nav{flex-direction:row;gap:20px;}.main-content{padding:10px;}}
+@media(min-width:769px){.buttons{grid-template-columns:repeat(5,1fr);}}
+@media(max-width:768px){.buttons{grid-template-columns:repeat(4,1fr);}}
