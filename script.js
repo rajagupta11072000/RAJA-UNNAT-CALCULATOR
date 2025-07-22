@@ -1,41 +1,40 @@
-// ------------------------- Calculator Buttons -------------------------
+// Calculator logic
 const display = document.getElementById('display');
 let expr = '';
 
-const basicButtons = [
+const buttons = [
   '7', '8', '9', '/', 'C',
-  '4', '5', '6', '*', '(', 
-  '1', '2', '3', '-', ')', 
+  '4', '5', '6', '*', '(',
+  '1', '2', '3', '-', ')',
   '0', '.', '=', '+', '√'
 ];
-
 const btnGrid = document.getElementById('btn-grid');
-basicButtons.forEach(text => {
+buttons.forEach(val => {
   const btn = document.createElement('button');
-  btn.innerText = text;
-  btn.onclick = () => handleClick(text);
-  if (['+', '-', '*', '/', '=', '√'].includes(text)) btn.classList.add('operator');
+  btn.innerText = val;
+  btn.onclick = () => {
+    if (val === 'C') {
+      expr = '';
+      display.value = '';
+    } else if (val === '=') {
+      try {
+        expr = expr.replace(/√/g, 'Math.sqrt');
+        display.value = Function('"use strict";return (' + expr + ')')();
+        expr = display.value;
+      } catch {
+        display.value = 'Error';
+        expr = '';
+      }
+    } else {
+      expr += val;
+      display.value = expr;
+    }
+  };
+  if (['+', '-', '*', '/', '=', '√'].includes(val)) btn.classList.add('operator');
   btnGrid.appendChild(btn);
 });
 
-function handleClick(val) {
-  if (val === 'C') {
-    expr = '';
-    display.value = '';
-  } else if (val === '=') {
-    try {
-      expr = expr.replace(/√/g, 'Math.sqrt');
-      display.value = Function('"use strict";return (' + expr + ')')();
-    } catch {
-      display.value = 'Error';
-    }
-  } else {
-    expr += val;
-    display.value = expr;
-  }
-}
-
-// ------------------------- Sidebar Navigation -------------------------
+// Tab switching
 document.querySelectorAll('.tab-button').forEach(btn => {
   btn.onclick = () => {
     document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
@@ -45,7 +44,7 @@ document.querySelectorAll('.tab-button').forEach(btn => {
   };
 });
 
-// ------------------------- BMI Calculator -------------------------
+// BMI
 document.getElementById('calc-bmi').onclick = () => {
   const w = parseFloat(document.getElementById('bmi-weight').value);
   const h = parseFloat(document.getElementById('bmi-height').value) / 100;
@@ -56,7 +55,7 @@ document.getElementById('calc-bmi').onclick = () => {
   document.getElementById('bmi-result').innerText = isNaN(bmi) ? 'Error' : `${bmi} (${cat})`;
 };
 
-// ------------------------- Percentage -------------------------
+// Percentage
 document.getElementById('calc-perc').onclick = () => {
   const b = parseFloat(document.getElementById('perc-base').value);
   const p = parseFloat(document.getElementById('perc-percent').value);
@@ -64,7 +63,7 @@ document.getElementById('calc-perc').onclick = () => {
   document.getElementById('perc-result').innerText = isNaN(res) ? 'Error' : res;
 };
 
-// ------------------------- Currency -------------------------
+// Currency
 (async () => {
   const key = '7b46c9d6348fe49e3acccd34';
   const res = await fetch(`https://v6.exchangerate-api.com/v6/${key}/latest/USD`);
@@ -84,21 +83,21 @@ document.getElementById('calc-perc').onclick = () => {
       document.getElementById('curr-result').innerText = 'Error';
       return;
     }
-    const res = (a * rates[t] / rates[f]).toFixed(2);
-    document.getElementById('curr-result').innerText = res;
+    const result = (a * rates[t] / rates[f]).toFixed(2);
+    document.getElementById('curr-result').innerText = result;
   };
 })();
 
-// ------------------------- Unit Converter Factory -------------------------
+// Unit converter setup
 const units = {
   length: { m: 1, km: 0.001, cm: 100, mm: 1000, in: 39.37, ft: 3.281 },
   area: { m2: 1, km2: 0.000001, ft2: 10.7639, in2: 1550 },
   volume: { l: 1, ml: 1000, gal: 0.2642 },
   weight: { kg: 1, g: 1000, lb: 2.2046 },
   temp: { C: 1, F: 'F', K: 'K' },
-  time: { sec: 1, min: 1/60, hr: 1/3600 },
+  time: { sec: 1, min: 1 / 60, hr: 1 / 3600 },
   speed: { 'm/s': 1, 'km/h': 3.6, mph: 2.237 },
-  data: { B: 1, KB: 1/1024, MB: 1/1048576 },
+  data: { B: 1, KB: 1 / 1024, MB: 1 / 1048576 },
   pressure: { Pa: 1, bar: 0.00001, psi: 0.000145 },
   energy: { J: 1, kWh: 2.78e-7, kcal: 0.000239 },
   angle: { deg: 1, rad: 0.0174533 }
