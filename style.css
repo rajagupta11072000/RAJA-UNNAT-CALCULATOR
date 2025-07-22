@@ -1,14 +1,14 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{display:flex;font-family:'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;}
-.container {flex:1;display:flex;flex-direction:row;}
-.sidebar{background:#1e293b;width:90px;display:flex;flex-direction:column;align-items:center;padding-top:10px;}
+.container{flex:1;display:flex;flex-direction:row;}
+.sidebar{background:#1e293b;width:90px;display:flex;flex-direction:column;align-items:center;padding-top:10px;position:fixed;height:100vh;overflow-y:auto;}
 .logo{font-size:2.5rem;color:#38bdf8;margin-bottom:10px;}
-.nav{display:flex;flex-direction:column;gap:8px;overflow-y:auto;}
+.nav{display:flex;flex-direction:column;gap:8px;}
 .tab-button{background:none;border:none;color:#94a3b8;font-size:22px;text-align:center;display:flex;flex-direction:column;align-items:center;padding:8px;transition:0.3s;}
 .tab-button span{font-size:24px;}
 .tab-button label{font-size:10px;margin-top:2px;}
 .tab-button.active,.tab-button:hover{color:#38bdf8;}
-.main-content{flex:1;padding:20px;overflow-y:auto;}
+.main-content{margin-left:90px;flex:1;padding:20px;overflow-y:auto;}
 .panel{display:none;} .panel.active{display:block;}
 .display{width:100%;padding:15px;font-size:1.8rem;border:none;border-radius:8px;background:#1e293b;color:#38bdf8;margin-bottom:10px;}
 .buttons{display:grid;gap:8px;}
@@ -21,10 +21,14 @@ button.operator{background:#06b6d4;color:white;}button.operator:hover{background
 .calc-grid button:hover{background:#06b6d4;}
 .calc-grid p{margin-top:8px;font-size:1rem;}
 @media(max-width:768px){
-  .container{flex-direction:column;}
-  .sidebar{width:100%;height:auto;flex-direction:row;overflow-x:auto;}
-  .nav{flex-direction:row;gap:12px;}
-  .main-content{padding:10px;}
+  .container{flex-direction:row;}
+  .sidebar{width:60px;height:100vh;}
+  .nav{gap:4px;}
+  .main-content{margin-left:60px;padding:10px;}
+  .tab-button span{font-size:20px;} .tab-button label{display:none;}
+  .display{font-size:1.5rem;padding:10px;}
+  .buttons button{padding:12px;font-size:1rem;}
+  .calc-grid{gap:6px;}
 }
 @media(min-width:769px){.buttons{grid-template-columns:repeat(5,1fr);}}
 @media(max-width:768px){.buttons{grid-template-columns:repeat(4,1fr);}}
