@@ -55,7 +55,7 @@ document.getElementById('calc-perc').onclick = () => {
 
 // --- Currency Converter (with API) ---
 (async () => {
-  const key = 'YOUR_KEY_HERE'; // ← replace with your real API key
+  const key = '7b46c9d6348fe49e3acccd34'; // ← replace with your real API key
   const resp = await fetch(`https://v6.exchangerate-api.com/v6/${key}/latest/USD`);
   const data = await resp.json();
   const rates = data.conversion_rates;
