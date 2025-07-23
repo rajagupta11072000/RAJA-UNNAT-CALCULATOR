@@ -1,11 +1,13 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raja Unnat Calculator</title>
+    <title>Raja Unnat Ultra Calculator</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -25,6 +27,10 @@
                 <li><a href="#" onclick="switchMode('age')"><i class="fas fa-calendar"></i> Age Calculator</a></li>
                 <li><a href="#" onclick="switchMode('cgpa')"><i class="fas fa-graduation-cap"></i> CGPA Calculator</a></li>
                 <li><a href="#" onclick="switchMode('fuel')"><i class="fas fa-gas-pump"></i> Fuel Cost Calculator</a></li>
+                <li><a href="#" onclick="switchMode('roi')"><i class="fas fa-chart-line"></i> ROI Calculator</a></li>
+                <li><a href="#" onclick="switchMode('percent-change')"><i class="fas fa-chart-bar"></i> % Change</a></li>
+                <li><a href="#" onclick="switchMode('compound')"><i class="fas fa-money-check-alt"></i> Compound Interest</a></li>
+                <li><a href="#" onclick="switchMode('amortization')"><i class="fas fa-table"></i> Loan Amortization</a></li>
                 <li><a href="#" onclick="switchMode('length')"><i class="fas fa-ruler"></i> Length Converter</a></li>
                 <li><a href="#" onclick="switchMode('area')"><i class="fas fa-square"></i> Area Converter</a></li>
                 <li><a href="#" onclick="switchMode('volume')"><i class="fas fa-cube"></i> Volume Converter</a></li>
@@ -32,12 +38,16 @@
                 <li><a href="#" onclick="switchMode('time')"><i class="fas fa-clock"></i> Time Converter</a></li>
                 <li><a href="#" onclick="switchMode('weight')"><i class="fas fa-weight-hanging"></i> Weight Converter</a></li>
                 <li><a href="#" onclick="switchMode('temperature')"><i class="fas fa-thermometer"></i> Temperature Converter</a></li>
-                <li><a href="#" onclick="switchMode('roi')"><i class="fas fa-chart-line"></i> ROI Calculator</a></li>
-                <li><a href="#" onclick="switchMode('percent-change')"><i class="fas fa-chart-bar"></i> % Change</a></li>
                 <li><a href="#" onclick="switchMode('angle')"><i class="fas fa-protractor"></i> Angle Converter</a></li>
                 <li><a href="#" onclick="switchMode('data')"><i class="fas fa-database"></i> Data Converter</a></li>
+                <li><a href="#" onclick="switchMode('power')"><i class="fas fa-bolt"></i> Power Converter</a></li>
+                <li><a href="#" onclick="switchMode('energy')"><i class="fas fa-battery-full"></i> Energy Converter</a></li>
+                <li><a href="#" onclick="switchMode('pressure')"><i class="fas fa-tachometer-alt"></i> Pressure Converter</a></li>
+                <li><a href="#" onclick="switchMode('frequency')"><i class="fas fa-wave-square"></i> Frequency Converter</a></li>
+                <li><a href="#" onclick="switchMode('data-rate')"><i class="fas fa-wifi"></i> Data Rate Converter</a></li>
             </ul>
             <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i> Toggle Theme</button>
+            <button class="export-btn" onclick="exportHistory()"><i class="fas fa-download"></i> Export History</button>
         </div>
 
         <!-- Main Content -->
@@ -85,19 +95,29 @@
                 <!-- Currency Converter -->
                 <div class="calculator-section" id="currency-section" style="display: none;">
                     <select id="currency-from-unit">
-                        <option value="USD">USD</option>
-                        <option value="INR">INR</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="JPY">JPY</option>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="INR">INR - Indian Rupee</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="AUD">AUD - Australian Dollar</option>
+                        <option value="CAD">CAD - Canadian Dollar</option>
+                        <option value="CHF">CHF - Swiss Franc</option>
+                        <option value="CNY">CNY - Chinese Yuan</option>
+                        <option value="SGD">SGD - Singapore Dollar</option>
                     </select>
                     <input type="number" id="currency-amount" placeholder="Enter amount">
                     <select id="currency-to-unit">
-                        <option value="USD">USD</option>
-                        <option value="INR">INR</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="JPY">JPY</option>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="INR">INR - Indian Rupee</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="AUD">AUD - Australian Dollar</option>
+                        <option value="CAD">CAD - Canadian Dollar</option>
+                        <option value="CHF">CHF - Swiss Franc</option>
+                        <option value="CNY">CNY - Chinese Yuan</option>
+                        <option value="SGD">SGD - Singapore Dollar</option>
                     </select>
                     <button onclick="convertCurrency()">Convert</button>
                 </div>
@@ -236,20 +256,6 @@
                     <button onclick="convertTemperature()">Convert</button>
                 </div>
 
-                <!-- ROI Calculator -->
-                <div class="calculator-section" id="roi-section" style="display: none;">
-                    <input type="number" id="initial-investment" placeholder="Initial Investment">
-                    <input type="number" id="final-value" placeholder="Final Value">
-                    <button onclick="calculateROI()">Calculate ROI</button>
-                </div>
-
-                <!-- Percentage Change Calculator -->
-                <div class="calculator-section" id="percent-change-section" style="display: none;">
-                    <input type="number" id="initial-value" placeholder="Initial Value">
-                    <input type="number" id="final-value" placeholder="Final Value">
-                    <button onclick="calculatePercentChange()">Calculate % Change</button>
-                </div>
-
                 <!-- Angle Converter -->
                 <div class="calculator-section" id="angle-section" style="display: none;">
                     <select id="angle-from-unit">
@@ -266,7 +272,7 @@
                     <button onclick="convertAngle()">Convert</button>
                 </div>
 
-                <!-- Unit-to-Unit Data Converter -->
+                <!-- Data Converter -->
                 <div class="calculator-section" id="data-section" style="display: none;">
                     <select id="data-from-unit">
                         <option value="b">Byte</option>
@@ -286,7 +292,119 @@
                     <button onclick="convertData()">Convert</button>
                 </div>
 
-                <!-- Placeholder for Existing Calculators -->
+                <!-- Power Converter -->
+                <div class="calculator-section" id="power-section" style="display: none;">
+                    <select id="power-from-unit">
+                        <option value="w">Watt</option>
+                        <option value="kw">Kilowatt</option>
+                        <option value="hp">Horsepower</option>
+                    </select>
+                    <input type="number" id="power-amount" placeholder="Enter power">
+                    <select id="power-to-unit">
+                        <option value="w">Watt</option>
+                        <option value="kw">Kilowatt</option>
+                        <option value="hp">Horsepower</option>
+                    </select>
+                    <button onclick="convertPower()">Convert</button>
+                </div>
+
+                <!-- Energy Converter -->
+                <div class="calculator-section" id="energy-section" style="display: none;">
+                    <select id="energy-from-unit">
+                        <option value="j">Joule</option>
+                        <option value="cal">Calorie</option>
+                        <option value="kwh">Kilowatt-hour</option>
+                    </select>
+                    <input type="number" id="energy-amount" placeholder="Enter energy">
+                    <select id="energy-to-unit">
+                        <option value="j">Joule</option>
+                        <option value="cal">Calorie</option>
+                        <option value="kwh">Kilowatt-hour</option>
+                    </select>
+                    <button onclick="convertEnergy()">Convert</button>
+                </div>
+
+                <!-- Pressure Converter -->
+                <div class="calculator-section" id="pressure-section" style="display: none;">
+                    <select id="pressure-from-unit">
+                        <option value="pa">Pascal</option>
+                        <option value="bar">Bar</option>
+                        <option value="psi">PSI</option>
+                    </select>
+                    <input type="number" id="pressure-amount" placeholder="Enter pressure">
+                    <select id="pressure-to-unit">
+                        <option value="pa">Pascal</option>
+                        <option value="bar">Bar</option>
+                        <option value="psi">PSI</option>
+                    </select>
+                    <button onclick="convertPressure()">Convert</button>
+                </div>
+
+                <!-- Frequency Converter -->
+                <div class="calculator-section" id="frequency-section" style="display: none;">
+                    <select id="frequency-from-unit">
+                        <option value="hz">Hertz</option>
+                        <option value="khz">Kilohertz</option>
+                        <option value="mhz">Megahertz</option>
+                    </select>
+                    <input type="number" id="frequency-amount" placeholder="Enter frequency">
+                    <select id="frequency-to-unit">
+                        <option value="hz">Hertz</option>
+                        <option value="khz">Kilohertz</option>
+                        <option value="mhz">Megahertz</option>
+                    </select>
+                    <button onclick="convertFrequency()">Convert</button>
+                </div>
+
+                <!-- Data Rate Converter -->
+                <div class="calculator-section" id="data-rate-section" style="display: none;">
+                    <select id="data-rate-from-unit">
+                        <option value="bps">Bits/second</option>
+                        <option value="mbps">Megabits/second</option>
+                        <option value="gbps">Gigabits/second</option>
+                    </select>
+                    <input type="number" id="data-rate-amount" placeholder="Enter data rate">
+                    <select id="data-rate-to-unit">
+                        <option value="bps">Bits/second</option>
+                        <option value="mbps">Megabits/second</option>
+                        <option value="gbps">Gigabits/second</option>
+                    </select>
+                    <button onclick="convertDataRate()">Convert</button>
+                </div>
+
+                <!-- Financial Calculators -->
+                <div class="calculator-section" id="roi-section" style="display: none;">
+                    <input type="number" id="initial-investment" placeholder="Initial Investment">
+                    <input type="number" id="final-value" placeholder="Final Value">
+                    <button onclick="calculateROI()">Calculate ROI</button>
+                </div>
+
+                <div class="calculator-section" id="percent-change-section" style="display: none;">
+                    <input type="number" id="initial-value" placeholder="Initial Value">
+                    <input type="number" id="final-value" placeholder="Final Value">
+                    <button onclick="calculatePercentChange()">Calculate % Change</button>
+                </div>
+
+                <div class="calculator-section" id="compound-section" style="display: none;">
+                    <input type="number" id="compound-principal" placeholder="Principal Amount">
+                    <input type="number" id="compound-rate" placeholder="Annual Interest Rate (%)">
+                    <input type="number" id="compound-time" placeholder="Time (years)">
+                    <select id="compound-frequency">
+                        <option value="12">Monthly</option>
+                        <option value="4">Quarterly</option>
+                        <option value="1">Annually</option>
+                    </select>
+                    <button onclick="calculateCompoundInterest()">Calculate</button>
+                </div>
+
+                <div class="calculator-section" id="amortization-section" style="display: none;">
+                    <input type="number" id="amortization-principal" placeholder="Loan Amount">
+                    <input type="number" id="amortization-rate" placeholder="Annual Interest Rate (%)">
+                    <input type="number" id="amortization-tenure" placeholder="Tenure (months)">
+                    <button onclick="calculateAmortization()">Calculate</button>
+                </div>
+
+                <!-- Existing Calculators -->
                 <div class="calculator-section" id="bmi-section" style="display: none;">
                     <input type="number" id="bmi-weight" placeholder="Weight (kg)">
                     <input type="number" id="bmi-height" placeholder="Height (m)">
