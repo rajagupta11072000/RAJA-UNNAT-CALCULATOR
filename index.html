@@ -1,85 +1,331 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Raja Unnat Calculator</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://kit.fontawesome.com/a2e0e6cfd3.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raja Unnat Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <div class="container">
-    <div class="sidebar">
-      <div class="tool active" data-tool="calc-section">
-        <i class="fas fa-calculator"></i>
-        <span>Calculator</span>
-      </div>
-      <div class="tool" data-tool="bmi-section"><i class="fas fa-user-md"></i><span>BMI</span></div>
-      <div class="tool" data-tool="perc-section"><i class="fas fa-percent"></i><span>Percentage</span></div>
-      <div class="tool" data-tool="curr-section"><i class="fas fa-dollar-sign"></i><span>Currency</span></div>
-      <div class="tool" data-tool="emi-section"><i class="fas fa-university"></i><span>EMI</span></div>
-      <div class="tool" data-tool="tax-section"><i class="fas fa-file-invoice-dollar"></i><span>Tax</span></div>
-      <div class="tool" data-tool="age-section"><i class="fas fa-birthday-cake"></i><span>Age</span></div>
-      <div class="tool" data-tool="cgpa-section"><i class="fas fa-graduation-cap"></i><span>CGPA</span></div>
-      <div class="tool" data-tool="fuel-section"><i class="fas fa-gas-pump"></i><span>Fuel</span></div>
-      <div class="tool" data-tool="length-section"><i class="fas fa-ruler"></i><span>Length</span></div>
-      <div class="tool" data-tool="area-section"><i class="fas fa-draw-polygon"></i><span>Area</span></div>
-      <div class="tool" data-tool="volume-section"><i class="fas fa-cube"></i><span>Volume</span></div>
-      <div class="tool" data-tool="weight-section"><i class="fas fa-weight-hanging"></i><span>Weight</span></div>
-      <div class="tool" data-tool="speed-section"><i class="fas fa-tachometer-alt"></i><span>Speed</span></div>
-      <div class="tool" data-tool="temp-section"><i class="fas fa-thermometer-half"></i><span>Temp</span></div>
-      <div class="tool" data-tool="time-section"><i class="fas fa-clock"></i><span>Time</span></div>
-      <div class="tool" data-tool="angle-section"><i class="fas fa-compass"></i><span>Angle</span></div>
-      <div class="tool" data-tool="roi-section"><i class="fas fa-chart-line"></i><span>ROI</span></div>
-      <div class="tool" data-tool="pchange-section"><i class="fas fa-percentage"></i><span>% Change</span></div>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Raja Unnat</h2>
+                <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" onclick="switchMode('basic')"><i class="fas fa-calculator"></i> Basic + Scientific</a></li>
+                <li><a href="#" onclick="switchMode('bmi')"><i class="fas fa-weight"></i> BMI Calculator</a></li>
+                <li><a href="#" onclick="switchMode('percentage')"><i class="fas fa-percentage"></i> Percentage Calculator</a></li>
+                <li><a href="#" onclick="switchMode('currency')"><i class="fas fa-money-bill"></i> Currency Converter</a></li>
+                <li><a href="#" onclick="switchMode('emi')"><i class="fas fa-landmark"></i> EMI Calculator</a></li>
+                <li><a href="#" onclick="switchMode('tax')"><i class="fas fa-file-invoice"></i> Tax Calculator</a></li>
+                <li><a href="#" onclick="switchMode('age')"><i class="fas fa-calendar"></i> Age Calculator</a></li>
+                <li><a href="#" onclick="switchMode('cgpa')"><i class="fas fa-graduation-cap"></i> CGPA Calculator</a></li>
+                <li><a href="#" onclick="switchMode('fuel')"><i class="fas fa-gas-pump"></i> Fuel Cost Calculator</a></li>
+                <li><a href="#" onclick="switchMode('length')"><i class="fas fa-ruler"></i> Length Converter</a></li>
+                <li><a href="#" onclick="switchMode('area')"><i class="fas fa-square"></i> Area Converter</a></li>
+                <li><a href="#" onclick="switchMode('volume')"><i class="fas fa-cube"></i> Volume Converter</a></li>
+                <li><a href="#" onclick="switchMode('speed')"><i class="fas fa-tachometer-alt"></i> Speed Converter</a></li>
+                <li><a href="#" onclick="switchMode('time')"><i class="fas fa-clock"></i> Time Converter</a></li>
+                <li><a href="#" onclick="switchMode('weight')"><i class="fas fa-weight-hanging"></i> Weight Converter</a></li>
+                <li><a href="#" onclick="switchMode('temperature')"><i class="fas fa-thermometer"></i> Temperature Converter</a></li>
+                <li><a href="#" onclick="switchMode('roi')"><i class="fas fa-chart-line"></i> ROI Calculator</a></li>
+                <li><a href="#" onclick="switchMode('percent-change')"><i class="fas fa-chart-bar"></i> % Change</a></li>
+                <li><a href="#" onclick="switchMode('angle')"><i class="fas fa-protractor"></i> Angle Converter</a></li>
+                <li><a href="#" onclick="switchMode('data')"><i class="fas fa-database"></i> Data Converter</a></li>
+            </ul>
+            <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i> Toggle Theme</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="calculator">
+                <div class="display">
+                    <div id="history"></div>
+                    <input type="text" id="result" readonly>
+                </div>
+
+                <!-- Basic + Scientific Calculator -->
+                <div class="calculator-section" id="basic-section">
+                    <div class="buttons">
+                        <button onclick="clearDisplay()">C</button>
+                        <button onclick="appendToDisplay('(')">(</button>
+                        <button onclick="appendToDisplay(')')">)</button>
+                        <button onclick="appendToDisplay('/')">/</button>
+                        <button onclick="appendToDisplay('7')">7</button>
+                        <button onclick="appendToDisplay('8')">8</button>
+                        <button onclick="appendToDisplay('9')">9</button>
+                        <button onclick="appendToDisplay('*')">×</button>
+                        <button onclick="appendToDisplay('4')">4</button>
+                        <button onclick="appendToDisplay('5')">5</button>
+                        <button onclick="appendToDisplay('6')">6</button>
+                        <button onclick="appendToDisplay('-')">-</button>
+                        <button onclick="appendToDisplay('1')">1</button>
+                        <button onclick="appendToDisplay('2')">2</button>
+                        <button onclick="appendToDisplay('3')">3</button>
+                        <button onclick="appendToDisplay('+')">+</button>
+                        <button onclick="appendToDisplay('0')">0</button>
+                        <button onclick="appendToDisplay('.')">.</button>
+                        <button onclick="calculate()">=</button>
+                        <button onclick="clearAll()">AC</button>
+                        <button onclick="appendToDisplay('Math.sin(')">sin</button>
+                        <button onclick="appendToDisplay('Math.cos(')">cos</button>
+                        <button onclick="appendToDisplay('Math.tan(')">tan</button>
+                        <button onclick="appendToDisplay('Math.log10(')">log</button>
+                        <button onclick="appendToDisplay('Math.sqrt(')">√</button>
+                        <button onclick="appendToDisplay('**2')">x²</button>
+                        <button onclick="appendToDisplay('Math.PI')">π</button>
+                        <button onclick="appendToDisplay('Math.E')">e</button>
+                    </div>
+                </div>
+
+                <!-- Currency Converter -->
+                <div class="calculator-section" id="currency-section" style="display: none;">
+                    <select id="currency-from-unit">
+                        <option value="USD">USD</option>
+                        <option value="INR">INR</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="JPY">JPY</option>
+                    </select>
+                    <input type="number" id="currency-amount" placeholder="Enter amount">
+                    <select id="currency-to-unit">
+                        <option value="USD">USD</option>
+                        <option value="INR">INR</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="JPY">JPY</option>
+                    </select>
+                    <button onclick="convertCurrency()">Convert</button>
+                </div>
+
+                <!-- Length Converter -->
+                <div class="calculator-section" id="length-section" style="display: none;">
+                    <select id="length-from-unit">
+                        <option value="m">Meter</option>
+                        <option value="km">Kilometer</option>
+                        <option value="cm">Centimeter</option>
+                        <option value="mm">Millimeter</option>
+                        <option value="mi">Mile</option>
+                        <option value="ft">Foot</option>
+                        <option value="in">Inch</option>
+                    </select>
+                    <input type="number" id="length-amount" placeholder="Enter length">
+                    <select id="length-to-unit">
+                        <option value="m">Meter</option>
+                        <option value="km">Kilometer</option>
+                        <option value="cm">Centimeter</option>
+                        <option value="mm">Millimeter</option>
+                        <option value="mi">Mile</option>
+                        <option value="ft">Foot</option>
+                        <option value="in">Inch</option>
+                    </select>
+                    <button onclick="convertLength()">Convert</button>
+                </div>
+
+                <!-- Area Converter -->
+                <div class="calculator-section" id="area-section" style="display: none;">
+                    <select id="area-from-unit">
+                        <option value="sqm">Square Meter</option>
+                        <option value="sqkm">Square Kilometer</option>
+                        <option value="sqft">Square Foot</option>
+                        <option value="sqin">Square Inch</option>
+                        <option value="acre">Acre</option>
+                    </select>
+                    <input type="number" id="area-amount" placeholder="Enter area">
+                    <select id="area-to-unit">
+                        <option value="sqm">Square Meter</option>
+                        <option value="sqkm">Square Kilometer</option>
+                        <option value="sqft">Square Foot</option>
+                        <option value="sqin">Square Inch</option>
+                        <option value="acre">Acre</option>
+                    </select>
+                    <button onclick="convertArea()">Convert</button>
+                </div>
+
+                <!-- Volume Converter -->
+                <div class="calculator-section" id="volume-section" style="display: none;">
+                    <select id="volume-from-unit">
+                        <option value="l">Liter</option>
+                        <option value="ml">Milliliter</option>
+                        <option value="m3">Cubic Meter</option>
+                        <option value="gal">Gallon</option>
+                        <option value="ft3">Cubic Foot</option>
+                    </select>
+                    <input type="number" id="volume-amount" placeholder="Enter volume">
+                    <select id="volume-to-unit">
+                        <option value="l">Liter</option>
+                        <option value="ml">Milliliter</option>
+                        <option value="m3">Cubic Meter</option>
+                        <option value="gal">Gallon</option>
+                        <option value="ft3">Cubic Foot</option>
+                    </select>
+                    <button onclick="convertVolume()">Convert</button>
+                </div>
+
+                <!-- Speed Converter -->
+                <div class="calculator-section" id="speed-section" style="display: none;">
+                    <select id="speed-from-unit">
+                        <option value="mps">Meter/Second</option>
+                        <option value="kmph">Kilometer/Hour</option>
+                        <option value="mph">Mile/Hour</option>
+                        <option value="knot">Knot</option>
+                    </select>
+                    <input type="number" id="speed-amount" placeholder="Enter speed">
+                    <select id="speed-to-unit">
+                        <option value="mps">Meter/Second</option>
+                        <option value="kmph">Kilometer/Hour</option>
+                        <option value="mph">Mile/Hour</option>
+                        <option value="knot">Knot</option>
+                    </select>
+                    <button onclick="convertSpeed()">Convert</button>
+                </div>
+
+                <!-- Time Converter -->
+                <div class="calculator-section" id="time-section" style="display: none;">
+                    <select id="time-from-unit">
+                        <option value="s">Second</option>
+                        <option value="min">Minute</option>
+                        <option value="hr">Hour</option>
+                        <option value="day">Day</option>
+                    </select>
+                    <input type="number" id="time-amount" placeholder="Enter time">
+                    <select id="time-to-unit">
+                        <option value="s">Second</option>
+                        <option value="min">Minute</option>
+                        <option value="hr">Hour</option>
+                        <option value="day">Day</option>
+                    </select>
+                    <button onclick="convertTime()">Convert</button>
+                </div>
+
+                <!-- Weight/Mass Converter -->
+                <div class="calculator-section" id="weight-section" style="display: none;">
+                    <select id="weight-from-unit">
+                        <option value="kg">Kilogram</option>
+                        <option value="g">Gram</option>
+                        <option value="lb">Pound</option>
+                        <option value="oz">Ounce</option>
+                    </select>
+                    <input type="number" id="weight-amount" placeholder="Enter weight">
+                    <select id="weight-to-unit">
+                        <option value="kg">Kilogram</option>
+                        <option value="g">Gram</option>
+                        <option value="lb">Pound</option>
+                        <option value="oz">Ounce</option>
+                    </select>
+                    <button onclick="convertWeight()">Convert</button>
+                </div>
+
+                <!-- Temperature Converter -->
+                <div class="calculator-section" id="temperature-section" style="display: none;">
+                    <select id="temperature-from-unit">
+                        <option value="c">Celsius</option>
+                        <option value="f">Fahrenheit</option>
+                        <option value="k">Kelvin</option>
+                    </select>
+                    <input type="number" id="temperature-amount" placeholder="Enter temperature">
+                    <select id="temperature-to-unit">
+                        <option value="c">Celsius</option>
+                        <option value="f">Fahrenheit</option>
+                        <option value="k">Kelvin</option>
+                    </select>
+                    <button onclick="convertTemperature()">Convert</button>
+                </div>
+
+                <!-- ROI Calculator -->
+                <div class="calculator-section" id="roi-section" style="display: none;">
+                    <input type="number" id="initial-investment" placeholder="Initial Investment">
+                    <input type="number" id="final-value" placeholder="Final Value">
+                    <button onclick="calculateROI()">Calculate ROI</button>
+                </div>
+
+                <!-- Percentage Change Calculator -->
+                <div class="calculator-section" id="percent-change-section" style="display: none;">
+                    <input type="number" id="initial-value" placeholder="Initial Value">
+                    <input type="number" id="final-value" placeholder="Final Value">
+                    <button onclick="calculatePercentChange()">Calculate % Change</button>
+                </div>
+
+                <!-- Angle Converter -->
+                <div class="calculator-section" id="angle-section" style="display: none;">
+                    <select id="angle-from-unit">
+                        <option value="deg">Degree</option>
+                        <option value="rad">Radian</option>
+                        <option value="grad">Gradian</option>
+                    </select>
+                    <input type="number" id="angle-amount" placeholder="Enter angle">
+                    <select id="angle-to-unit">
+                        <option value="deg">Degree</option>
+                        <option value="rad">Radian</option>
+                        <option value="grad">Gradian</option>
+                    </select>
+                    <button onclick="convertAngle()">Convert</button>
+                </div>
+
+                <!-- Unit-to-Unit Data Converter -->
+                <div class="calculator-section" id="data-section" style="display: none;">
+                    <select id="data-from-unit">
+                        <option value="b">Byte</option>
+                        <option value="kb">Kilobyte</option>
+                        <option value="mb">Megabyte</option>
+                        <option value="gb">Gigabyte</option>
+                        <option value="tb">Terabyte</option>
+                    </select>
+                    <input type="number" id="data-amount" placeholder="Enter data size">
+                    <select id="data-to-unit">
+                        <option value="b">Byte</option>
+                        <option value="kb">Kilobyte</option>
+                        <option value="mb">Megabyte</option>
+                        <option value="gb">Gigabyte</option>
+                        <option value="tb">Terabyte</option>
+                    </select>
+                    <button onclick="convertData()">Convert</button>
+                </div>
+
+                <!-- Placeholder for Existing Calculators -->
+                <div class="calculator-section" id="bmi-section" style="display: none;">
+                    <input type="number" id="bmi-weight" placeholder="Weight (kg)">
+                    <input type="number" id="bmi-height" placeholder="Height (m)">
+                    <button onclick="calculateBMI()">Calculate BMI</button>
+                </div>
+                <div class="calculator-section" id="percentage-section" style="display: none;">
+                    <input type="number" id="percent-value" placeholder="Value">
+                    <input type="number" id="percent-total" placeholder="Total">
+                    <button onclick="calculatePercentage()">Calculate %</button>
+                </div>
+                <div class="calculator-section" id="emi-section" style="display: none;">
+                    <input type="number" id="emi-principal" placeholder="Loan Amount">
+                    <input type="number" id="emi-rate" placeholder="Interest Rate (%)">
+                    <input type="number" id="emi-tenure" placeholder="Tenure (months)">
+                    <button onclick="calculateEMI()">Calculate EMI</button>
+                </div>
+                <div class="calculator-section" id="tax-section" style="display: none;">
+                    <input type="number" id="tax-amount" placeholder="Amount">
+                    <input type="number" id="tax-rate" placeholder="Tax Rate (%)">
+                    <button onclick="calculateTax()">Calculate Tax</button>
+                </div>
+                <div class="calculator-section" id="age-section" style="display: none;">
+                    <input type="date" id="age-dob" placeholder="Date of Birth">
+                    <button onclick="calculateAge()">Calculate Age</button>
+                </div>
+                <div class="calculator-section" id="cgpa-section" style="display: none;">
+                    <input type="number" id="cgpa-marks" placeholder="Total Marks">
+                    <input type="number" id="cgpa-total" placeholder="Max Marks">
+                    <button onclick="calculateCGPA()">Calculate CGPA</button>
+                </div>
+                <div class="calculator-section" id="fuel-section" style="display: none;">
+                    <input type="number" id="fuel-distance" placeholder="Distance (km)">
+                    <input type="number" id="fuel-efficiency" placeholder="Efficiency (km/l)">
+                    <input type="number" id="fuel-price" placeholder="Fuel Price (per liter)">
+                    <button onclick="calculateFuelCost()">Calculate Fuel Cost</button>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="main">
-      <!-- Calculator -->
-      <div id="calc-section" class="tool-section active">
-        <input type="text" id="sci-display" readonly />
-        <div id="sci-buttons" class="grid"></div>
-      </div>
-
-      <!-- BMI -->
-      <div id="bmi-section" class="tool-section">
-        <input id="bmi-weight" type="number" placeholder="Weight (kg)" />
-        <input id="bmi-height" type="number" placeholder="Height (cm)" />
-        <button id="calc-bmi">Calculate BMI</button>
-        <div id="bmi-result"></div>
-      </div>
-
-      <!-- Percentage -->
-      <div id="perc-section" class="tool-section">
-        <input id="perc-base" type="number" placeholder="Base value" />
-        <input id="perc-percent" type="number" placeholder="Percentage (%)" />
-        <button id="calc-perc">Calculate</button>
-        <div id="perc-result"></div>
-      </div>
-
-      <!-- Currency -->
-      <div id="curr-section" class="tool-section">
-        <input id="curr-amount" type="number" placeholder="Amount" />
-        <select id="curr-from"></select>
-        <select id="curr-to"></select>
-        <button id="calc-curr">Convert</button>
-        <div id="curr-result"></div>
-      </div>
-
-      <!-- EMI -->
-      <div id="emi-section" class="tool-section">
-        <input id="emi-principal" type="number" placeholder="Loan Amount" />
-        <input id="emi-rate" type="number" placeholder="Interest Rate (%)" />
-        <input id="emi-months" type="number" placeholder="Loan Term (months)" />
-        <button id="calc-emi">Calculate EMI</button>
-        <div id="emi-result"></div>
-      </div>
-
-      <!-- More tools continue... -->
-      <!-- Remaining sections: tax-section, age-section, etc. will follow in next parts -->
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
