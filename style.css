@@ -1,7 +1,7 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #e0e7ff;
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -11,18 +11,19 @@ body {
 }
 
 .sidebar {
-    width: 250px;
-    background-color: #222;
+    width: 280px;
+    background: linear-gradient(180deg, #1e3a8a, #3b82f6);
     color: white;
     padding: 20px;
-    transition: width 0.3s;
+    transition: width 0.3s ease-in-out;
     position: fixed;
     height: 100%;
     overflow-y: auto;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar.collapsed {
-    width: 60px;
+    width: 70px;
 }
 
 .sidebar-header {
@@ -34,15 +35,21 @@ body {
 
 .sidebar-header h2 {
     margin: 0;
-    font-size: 24px;
+    font-size: 26px;
+    font-weight: 700;
 }
 
 .toggle-btn {
     background: none;
     border: none;
     color: white;
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.toggle-btn:hover {
+    transform: rotate(90deg);
 }
 
 .sidebar-menu {
@@ -51,7 +58,7 @@ body {
 }
 
 .sidebar-menu li {
-    margin: 10px 0;
+    margin: 8px 0;
 }
 
 .sidebar-menu a {
@@ -59,131 +66,192 @@ body {
     text-decoration: none;
     display: flex;
     align-items: center;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .sidebar-menu a:hover {
-    background-color: #444;
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
 }
 
 .sidebar-menu i {
-    margin-right: 10px;
+    margin-right: 12px;
+    font-size: 20px;
 }
 
-.theme-toggle {
+.theme-toggle, .export-btn {
     width: 100%;
-    padding: 10px;
-    background-color: #555;
+    padding: 12px;
+    background: linear-gradient(90deg, #4b6cb7, #182848);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 15px;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.theme-toggle:hover, .export-btn:hover {
+    background: linear-gradient(90deg, #182848, #4b6cb7);
+    transform: scale(1.05);
 }
 
 .main-content {
-    margin-left: 270px;
-    padding: 20px;
-    width: calc(100% - 270px);
+    margin-left: 300px;
+    padding: 30px;
+    width: calc(100% - 300px);
     transition: margin-left 0.3s, width 0.3s;
 }
 
 .main-content.collapsed {
-    margin-left: 80px;
-    width: calc(100% - 80px);
+    margin-left: 90px;
+    width: calc(100% - 90px);
 }
 
 .calculator {
-    background-color: #333;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    max-width: 600px;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
     margin: 0 auto;
+    transition: background-color 0.3s;
 }
 
 .display {
-    background-color: #fff;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    background: #f8fafc;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    position: relative;
 }
 
 #result {
     width: 100%;
-    height: 40px;
-    font-size: 24px;
+    height: 50px;
+    font-size: 28px;
     text-align: right;
     border: none;
     outline: none;
+    background: transparent;
+    color: #1e3a8a;
 }
 
 #history {
-    font-size: 14px;
-    color: #666;
+    font-size: 16px;
+    color: #64748b;
     text-align: right;
-    min-height: 20px;
+    max-height: 100px;
+    overflow-y: auto;
+    padding: 5px;
+    background: #e2e8f0;
+    border-radius: 5px;
 }
 
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
+    gap: 8px;
 }
 
 button {
     padding: 15px;
-    font-size: 18px;
+    font-size: 20px;
     border: none;
-    border-radius: 5px;
-    background-color: #555;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #3b82f6, #60a5fa);
     color: white;
     cursor: pointer;
+    transition: background 0.3s, transform 0.1s, box-shadow 0.2s;
 }
 
 button:hover {
-    background-color: #777;
+    background: linear-gradient(45deg, #2563eb, #3b82f6);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 .calculator-section {
-    margin-top: 10px;
+    margin-top: 15px;
+    animation: fadeIn 0.3s ease-in;
 }
 
 .calculator-section select, .calculator-section input {
-    padding: 10px;
-    font-size: 16px;
-    margin: 5px 0;
+    padding: 12px;
+    font-size: 18px;
+    margin: 8px 0;
     width: 100%;
     box-sizing: border-box;
-    border-radius: 5px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    transition: border-color 0.3s;
+}
+
+.calculator-section select:focus, .calculator-section input:focus {
+    border-color: #3b82f6;
+    outline: none;
 }
 
 /* Dark Mode */
 body.dark-mode {
-    background-color: #222;
-    color: #fff;
+    background-color: #1e293b;
+    color: #f1f5f9;
 }
 
 body.dark-mode .calculator {
-    background-color: #444;
+    background: #2d3748;
 }
 
 body.dark-mode .display {
-    background-color: #333;
+    background: #1e293b;
+}
+
+body.dark-mode #result {
+    color: #f1f5f9;
 }
 
 body.dark-mode #history {
-    color: #ccc;
+    color: #94a3b8;
+    background: #334155;
 }
 
+body.dark-mode .calculator-section select,
+body.dark-mode .calculator-section input {
+    background: #4b5563;
+    color: #f1f5f9;
+    border-color: #6b7280;
+}
+
+body.dark-mode button {
+    background: linear-gradient(45deg, #4b5563, #6b7280);
+}
+
+body.dark-mode button:hover {
+    background: linear-gradient(45deg, #374151, #4b5563);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .sidebar {
-        width: 60px;
+        width: 70px;
     }
     .main-content {
-        margin-left: 80px;
-        width: calc(100% - 80px);
+        margin-left: 90px;
+        width: calc(100% - 90px);
     }
     .sidebar-header h2 {
         display: none;
@@ -194,4 +262,10 @@ body.dark-mode #history {
     .sidebar-menu a span {
         display: none;
     }
+    .sidebar-menu i {
+        margin-right: 0;
+    }
+    .calculator {
+        max-width: 100%;
+    }
 }
