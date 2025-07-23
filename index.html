@@ -1,58 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Raja Unnat Calculator Pro</title>
   <link rel="stylesheet" href="style.css"/>
+  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
   <div class="container">
+    <!-- Sidebar with tools -->
     <aside class="sidebar">
-      <div class="logo">🧮</div>
-      <nav class="nav">
-        <button class="tab-button active" data-panel="calculator"><span>🧮</span><label>Calc</label></button>
-        <button class="tab-button" data-panel="scientific"><span>🔬</span><label>Science</label></button>
-        <button class="tab-button" data-panel="bmi"><span>⚖</span><label>BMI</label></button>
-        <button class="tab-button" data-panel="percentage"><span>%</span><label>Percent</label></button>
-        <button class="tab-button" data-panel="currency"><span>💱</span><label>Currency</label></button>
-        <button class="tab-button" data-panel="length"><span>📏</span><label>Length</label></button>
-        <button class="tab-button" data-panel="area"><span>📐</span><label>Area</label></button>
-        <button class="tab-button" data-panel="volume"><span>🥤</span><label>Volume</label></button>
-        <button class="tab-button" data-panel="weight"><span>🏋️‍♂️</span><label>Weight</label></button>
-        <button class="tab-button" data-panel="temp"><span>🌡️</span><label>Temp</label></button>
-        <button class="tab-button" data-panel="time"><span>⏱</span><label>Time</label></button>
-        <button class="tab-button" data-panel="speed"><span>🚗</span><label>Speed</label></button>
-        <button class="tab-button" data-panel="data"><span>💾</span><label>Data</label></button>
-        <button class="tab-button" data-panel="pressure"><span>🌬</span><label>Pressure</label></button>
-        <button class="tab-button" data-panel="energy"><span>⚡</span><label>Energy</label></button>
-        <button class="tab-button" data-panel="angle"><span>📐</span><label>Angle</label></button>
-        <button class="tab-button" data-panel="emi"><span>🏦</span><label>EMI</label></button>
-        <button class="tab-button" data-panel="investment"><span>📈</span><label>Return</label></button>
-        <button class="tab-button" data-panel="stats"><span>📊</span><label>Stats</label></button>
-        <button class="tab-button" data-panel="percentchange"><span>🔼</span><label>%Change</label></button>
-        <button class="tab-button" data-panel="cgpa"><span>🎓</span><label>CGPA</label></button>
-        <button class="tab-button" data-panel="fuel"><span>⛽</span><label>Fuel</label></button>
-        <button class="tab-button" data-panel="ratio"><span>➗</span><label>Ratio</label></button>
-        <button class="tab-button" data-panel="geometry"><span>🔲</span><label>Geometry</label></button>
-      </nav>
+      <div class="tool" data-tool="basic"><i class="fas fa-calculator"></i><span>Calc</span></div>
+      <div class="tool" data-tool="science"><i class="fas fa-atom"></i><span>Science</span></div>
+      <div class="tool" data-tool="bmi"><i class="fas fa-weight"></i><span>BMI</span></div>
+      <div class="tool" data-tool="percent"><i class="fas fa-percent"></i><span>Percent</span></div>
+      <div class="tool" data-tool="currency"><i class="fas fa-dollar-sign"></i><span>Currency</span></div>
+      <div class="tool" data-tool="length"><i class="fas fa-ruler"></i><span>Length</span></div>
+      <div class="tool" data-tool="area"><i class="fas fa-draw-polygon"></i><span>Area</span></div>
+      <div class="tool" data-tool="volume"><i class="fas fa-wine-bottle"></i><span>Volume</span></div>
+      <div class="tool" data-tool="time"><i class="fas fa-clock"></i><span>Time</span></div>
+      <div class="tool" data-tool="speed"><i class="fas fa-tachometer-alt"></i><span>Speed</span></div>
+      <div class="tool" data-tool="pressure"><i class="fas fa-compress-arrows-alt"></i><span>Pressure</span></div>
+      <div class="tool" data-tool="emi"><i class="fas fa-university"></i><span>EMI</span></div>
+      <div class="tool" data-tool="tax"><i class="fas fa-receipt"></i><span>Tax</span></div>
+      <div class="tool" data-tool="discount"><i class="fas fa-tags"></i><span>Discount</span></div>
+      <div class="tool" data-tool="age"><i class="fas fa-birthday-cake"></i><span>Age</span></div>
+      <div class="tool" data-tool="cgpa"><i class="fas fa-graduation-cap"></i><span>CGPA</span></div>
+      <div class="tool" data-tool="fuel"><i class="fas fa-gas-pump"></i><span>Fuel</span></div>
     </aside>
-    <main class="main-content">
-      <!-- Core Panels -->
-      <section id="calculator" class="panel active">
-        <input id="display" class="display" readonly placeholder="0"/>
-        <div id="btn-grid" class="buttons"></div>
-      </section>
-      <section id="scientific" class="panel">
-        <input id="sci-display" class="display" readonly placeholder=""/>
-        <div id="sci-buttons" class="buttons"></div>
-      </section>
-      <!-- Utility -->
-      <section id="bmi" class="panel"><h2>BMI</h2><div class="calc-grid"><input id="bmi-weight" placeholder="Weight kg"><input id="bmi-height" placeholder="Height cm"><button id="calc-bmi">Calc</button><p id="bmi-result">–</p></div></section>
-      <section id="percentage" class="panel"><h2>Percent</h2><div class="calc-grid"><input id="perc-base" placeholder="Base"><input id="perc-percent" placeholder="%"><button id="calc-perc">Calc</button><p id="perc-result">–</p></div></section>
-      <section id="currency" class="panel"><h2>Currency</h2><div class="calc-grid"><input id="curr-amount" placeholder="Amount"><select id="curr-from"></select><select id="curr-to"></select><button id="calc-curr">Convert</button><p id="curr-result">–</p></div></section>
+
+    <!-- Main Display Area -->
+    <main class="main">
+      <div id="basic" class="tool-section active">
+        <input type="text" id="basic-display" readonly />
+        <div id="basic-buttons" class="grid"></div>
+      </div>
+
+      <div id="science" class="tool-section">
+        <input type="text" id="sci-display" readonly />
+        <div id="sci-buttons" class="grid"></div>
+      </div>
+
+      <div id="bmi" class="tool-section">
+        <h2>BMI Calculator</h2>
+        <input type="number" id="bmi-weight" placeholder="Weight (kg)" />
+        <input type="number" id="bmi-height" placeholder="Height (cm)" />
+        <button id="calc-bmi">Check BMI</button>
+        <div id="bmi-result">Result –</div>
+      </div>
+
+      <div id="percent" class="tool-section">
+        <h2>Percentage Calculator</h2>
+        <input type="number" id="perc-base" placeholder="Base value" />
+        <input type="number" id="perc-percent" placeholder="Percent (%)" />
+        <button id="calc-perc">Calculate</button>
+        <div id="perc-result">Result –</div>
+      </div>
+
+      <div id="currency" class="tool-section">
+        <h2>Currency Converter</h2>
+        <input type="number" id="curr-amount" placeholder="Amount" />
+        <select id="curr-from"></select>
+        <select id="curr-to"></select>
+        <button id="calc-curr">Convert</button>
+        <div id="curr-result">Result –</div>
+      </div>
+
+      <!-- More sections (length, area, volume, etc.) will go here -->
     </main>
   </div>
-  <script src="script.js"></script>
 </body>
 </html>
