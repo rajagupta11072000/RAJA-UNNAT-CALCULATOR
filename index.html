@@ -3,46 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Raja Unnat Calculator Pro</title>
+  <title>Raja Unnat Calculator</title>
   <link rel="stylesheet" href="style.css"/>
   <script src="script.js" defer></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
   <div class="container">
-    <!-- Sidebar with tools -->
+    <!-- Sidebar -->
     <aside class="sidebar">
-      <div class="tool" data-tool="basic"><i class="fas fa-calculator"></i><span>Calc</span></div>
-      <div class="tool" data-tool="science"><i class="fas fa-atom"></i><span>Science</span></div>
+      <div class="tool active" data-tool="calculator"><i class="fas fa-calculator"></i><span>Calculator</span></div>
       <div class="tool" data-tool="bmi"><i class="fas fa-weight"></i><span>BMI</span></div>
-      <div class="tool" data-tool="percent"><i class="fas fa-percent"></i><span>Percent</span></div>
       <div class="tool" data-tool="currency"><i class="fas fa-dollar-sign"></i><span>Currency</span></div>
-      <div class="tool" data-tool="length"><i class="fas fa-ruler"></i><span>Length</span></div>
-      <div class="tool" data-tool="area"><i class="fas fa-draw-polygon"></i><span>Area</span></div>
-      <div class="tool" data-tool="volume"><i class="fas fa-wine-bottle"></i><span>Volume</span></div>
-      <div class="tool" data-tool="time"><i class="fas fa-clock"></i><span>Time</span></div>
-      <div class="tool" data-tool="speed"><i class="fas fa-tachometer-alt"></i><span>Speed</span></div>
-      <div class="tool" data-tool="pressure"><i class="fas fa-compress-arrows-alt"></i><span>Pressure</span></div>
+      <div class="tool" data-tool="percent"><i class="fas fa-percent"></i><span>Percent</span></div>
       <div class="tool" data-tool="emi"><i class="fas fa-university"></i><span>EMI</span></div>
       <div class="tool" data-tool="tax"><i class="fas fa-receipt"></i><span>Tax</span></div>
-      <div class="tool" data-tool="discount"><i class="fas fa-tags"></i><span>Discount</span></div>
       <div class="tool" data-tool="age"><i class="fas fa-birthday-cake"></i><span>Age</span></div>
       <div class="tool" data-tool="cgpa"><i class="fas fa-graduation-cap"></i><span>CGPA</span></div>
       <div class="tool" data-tool="fuel"><i class="fas fa-gas-pump"></i><span>Fuel</span></div>
     </aside>
 
-    <!-- Main Display Area -->
+    <!-- Main Content -->
     <main class="main">
-      <div id="basic" class="tool-section active">
-        <input type="text" id="basic-display" readonly />
-        <div id="basic-buttons" class="grid"></div>
+
+      <!-- Calculator Section -->
+      <div id="calculator" class="tool-section active">
+        <input type="text" id="sci-display" readonly placeholder="0" />
+        <div class="grid" id="sci-buttons"></div>
       </div>
 
-      <div id="science" class="tool-section">
-        <input type="text" id="sci-display" readonly />
-        <div id="sci-buttons" class="grid"></div>
-      </div>
-
+      <!-- BMI Calculator -->
       <div id="bmi" class="tool-section">
         <h2>BMI Calculator</h2>
         <input type="number" id="bmi-weight" placeholder="Weight (kg)" />
@@ -51,14 +41,7 @@
         <div id="bmi-result">Result –</div>
       </div>
 
-      <div id="percent" class="tool-section">
-        <h2>Percentage Calculator</h2>
-        <input type="number" id="perc-base" placeholder="Base value" />
-        <input type="number" id="perc-percent" placeholder="Percent (%)" />
-        <button id="calc-perc">Calculate</button>
-        <div id="perc-result">Result –</div>
-      </div>
-
+      <!-- Currency Converter -->
       <div id="currency" class="tool-section">
         <h2>Currency Converter</h2>
         <input type="number" id="curr-amount" placeholder="Amount" />
@@ -68,7 +51,22 @@
         <div id="curr-result">Result –</div>
       </div>
 
-      <!-- More sections (length, area, volume, etc.) will go here -->
+      <!-- Percentage -->
+      <div id="percent" class="tool-section">
+        <h2>Percentage Calculator</h2>
+        <input type="number" id="perc-base" placeholder="Base value" />
+        <input type="number" id="perc-percent" placeholder="Percent (%)" />
+        <button id="calc-perc">Calculate</button>
+        <div id="perc-result">Result –</div>
+      </div>
+
+      <!-- EMI, Tax, Age, CGPA, Fuel: More sections (coming in JS) -->
+      <div id="emi" class="tool-section"><h2>EMI Calculator</h2><div>Coming...</div></div>
+      <div id="tax" class="tool-section"><h2>Tax Calculator</h2><div>Coming...</div></div>
+      <div id="age" class="tool-section"><h2>Age Calculator</h2><div>Coming...</div></div>
+      <div id="cgpa" class="tool-section"><h2>CGPA Calculator</h2><div>Coming...</div></div>
+      <div id="fuel" class="tool-section"><h2>Fuel Calculator</h2><div>Coming...</div></div>
+
     </main>
   </div>
 </body>
