@@ -1,109 +1,392 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raja Unnat Ultra Calculator</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Raja Unnat Calculator - Advanced</title>
+<style>
+  *{box-sizing: border-box;}
+  body,html {
+    margin:0;padding:0;height:100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    height: 100vh;
+    background: linear-gradient(120deg, #6e48aa, #9e90f7);
+    color: #222;
+  }
+  #sidebar {
+    width: 280px;
+    background:#2c2349;
+    color:#dde1e7;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    border-right: 4px solid #9e90f7;
+  }
+  #sidebar h2 {
+    margin:15px 0; padding-left: 15px; font-weight:900;font-size:1.6rem;
+    border-bottom:1px solid #444;letter-spacing:1px;user-select:none;
+  }
+  #sidebar ul {
+    list-style:none; margin: 0; padding: 0; flex-grow:1; overflow-y:auto;
+  }
+  #sidebar ul li {
+    width: 100%;
+  }
+  #sidebar ul li button {
+    width: 100%; background: transparent; border: none;
+    color: #dde1e7; padding: 14px 16px; font-size: 1.15rem;
+    text-align: left; cursor: pointer;
+    border-left: 5px solid transparent;
+    display: flex; align-items: center; gap: 12px;
+    transition: background 0.3s, border-color 0.3s;
+    user-select:none; outline:none;
+  }
+  #sidebar ul li button:hover {
+    background: #8b79ff;
+    border-left-color: #d4c9ff;
+    color:#1a0dab;
+  }
+  #sidebar ul li button.active {
+    background: #d4c9ff; color: #2c2349!important;
+    border-left-color:#644de4;
+    font-weight: 800;
+  }
+  #sidebar ul li button svg {
+    width: 24px; height: 24px; fill: #a9a0fc; flex-shrink: 0;
+    transition: fill 0.3s;
+  }
+  #sidebar ul li button.active svg {
+    fill: #2c2349;
+  }
+  #main-content{
+    flex-grow:1; padding:30px 40px; background:#fff;
+    border-radius: 0 20px 20px 0;
+    box-shadow: 4px 0 18px rgba(0,0,0,0.12);
+    overflow-y:auto;
+    display: flex; flex-direction: column;
+  }
+  #main-content h1{
+    margin-top:0; margin-bottom:12px; color:#6e48aa;
+    font-weight:900; letter-spacing:1.5px;
+  }
+  #tool-content {
+    flex-grow:1;
+    overflow-y:auto;
+    max-height: calc(100vh - 120px);
+  }
+  .calculator-display {
+    width: 100%; font-family: monospace; font-size: 2.5rem;
+    background: #f6f6f6; border-radius: 15px; padding: 13px 20px;
+    text-align: right; border: 2px solid #ddd;
+    margin-bottom: 20px; user-select:none; overflow-x:auto;
+  }
+  .button-grid {
+    display:grid; grid-template-columns: repeat(4, 1fr);
+    gap: 16px; margin-bottom: 20px;
+  }
+  button.calc-btn {
+    cursor: pointer; border: none; border-radius: 18px;
+    padding: 18px 0; font-size: 1.5rem; font-weight: 700;
+    color: #fff; user-select:none;
+    background: linear-gradient(45deg,#6e48aa,#9e90f7);
+    box-shadow: 0 4px 8px rgba(110,72,170,0.7);
+    transition: all 0.2s ease;
+  }
+  button.calc-btn:hover {
+    filter: brightness(1.15); transform: scale(1.06);
+    box-shadow: 0 6px 15px rgba(110,72,170,0.9);
+  }
+  button.operator-btn {
+    background: linear-gradient(45deg,#f44336,#ff7961);
+  }
+  button.equal-btn {
+    grid-column: span 4;
+    background: linear-gradient(45deg,#02a676,#2cc39e);
+  }
+  button.clear-btn {
+    background: linear-gradient(45deg,#c62828,#e53935);
+  }
+  label {
+    margin-top: 15px;
+    font-weight: 700;
+    display: block;
+    font-size: 1.2rem;
+    user-select:none;
+  }
+  input[type=number], input[type=text] {
+    width: 100%; font-size: 1.3rem; padding: 10px 15px;
+    margin-top: 6px;
+    border: 2px solid #bbb; border-radius: 12px;
+    outline:none; user-select:text;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+    transition: border-color .3s ease;
+  }
+  input[type=number]:focus, input[type=text]:focus {
+    border-color: #6e48aa; box-shadow: 0 0 18px #a299f7aa;
+  }
+  #output {
+    margin-top: 20px; font-size:1.3rem; font-weight: 900;
+    border-radius: 12px; background:#f0f0f0; color:#444;
+    padding: 16px 22px; user-select:none; min-height: 65px;
+    box-shadow: inset 0 0 10px #ccc;
+  }
+  @media (max-width:720px) {
+    body {flex-direction: column;}
+    #sidebar {
+      width: 100%; height: 45vh; border-right: none;
+      display: flex; border-bottom: 5px solid #9e90f7;
+      padding: 12px 10px; overflow-x: auto;
+    }
+    #sidebar h2 {font-size: 1.15rem;padding-left: 12px;margin-bottom: 10px;}
+    #sidebar ul {
+      display: flex; overflow-x:auto; gap: 8px; flex-grow:0;
+      padding-left: 8px;
+    }
+    #sidebar ul li {
+      min-width: 100px;
+    }
+    #sidebar ul li button {
+      border-left:none; text-align: center; border-bottom: 3px solid transparent;
+      font-size: 1rem; padding: 12px 10px;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    #sidebar ul li button span {font-size: 0.9rem;}
+    #sidebar ul li button.active {
+      border-bottom-color: #d4c9ff; border-left:none;
+      background: transparent; color: #6e48aa; font-weight: 800;
+    }
+    #sidebar ul li button svg {
+      fill: #6e48aa;
+    }
+    #main-content {
+      height: 55vh; border-radius: 0; padding: 22px 18px; overflow-y: auto;
+    }
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h2>Raja Unnat</h2>
-                <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-            </div>
-            <ul class="sidebar-menu">
-                <li><a href="#" onclick="switchMode('basic')"><i class="fas fa-calculator"></i> Basic + Scientific</a></li>
-                <li><a href="#" onclick="switchMode('bmi')"><i class="fas fa-weight"></i> BMI Calculator</a></li>
-                <li><a href="#" onclick="switchMode('percentage')"><i class="fas fa-percentage"></i> Percentage Calculator</a></li>
-                <li><a href="#" onclick="switchMode('currency')"><i class="fas fa-money-bill"></i> Currency Converter</a></li>
-                <li><a href="#" onclick="switchMode('emi')"><i class="fas fa-landmark"></i> EMI Calculator</a></li>
-                <li><a href="#" onclick="switchMode('tax')"><i class="fas fa-file-invoice"></i> Tax Calculator</a></li>
-                <li><a href="#" onclick="switchMode('age')"><i class="fas fa-calendar"></i> Age Calculator</a></li>
-                <li><a href="#" onclick="switchMode('cgpa')"><i class="fas fa-graduation-cap"></i> CGPA Calculator</a></li>
-                <li><a href="#" onclick="switchMode('fuel')"><i class="fas fa-gas-pump"></i> Fuel Cost Calculator</a></li>
-                <li><a href="#" onclick="switchMode('roi')"><i class="fas fa-chart-line"></i> ROI Calculator</a></li>
-                <li><a href="#" onclick="switchMode('percent-change')"><i class="fas fa-chart-bar"></i> % Change</a></li>
-                <li><a href="#" onclick="switchMode('compound')"><i class="fas fa-money-check-alt"></i> Compound Interest</a></li>
-                <li><a href="#" onclick="switchMode('amortization')"><i class="fas fa-table"></i> Loan Amortization</a></li>
-                <li><a href="#" onclick="switchMode('length')"><i class="fas fa-ruler"></i> Length Converter</a></li>
-                <li><a href="#" onclick="switchMode('area')"><i class="fas fa-square"></i> Area Converter</a></li>
-                <li><a href="#" onclick="switchMode('volume')"><i class="fas fa-cube"></i> Volume Converter</a></li>
-                <li><a href="#" onclick="switchMode('speed')"><i class="fas fa-tachometer-alt"></i> Speed Converter</a></li>
-                <li><a href="#" onclick="switchMode('time')"><i class="fas fa-clock"></i> Time Converter</a></li>
-                <li><a href="#" onclick="switchMode('weight')"><i class="fas fa-weight-hanging"></i> Weight Converter</a></li>
-                <li><a href="#" onclick="switchMode('temperature')"><i class="fas fa-thermometer"></i> Temperature Converter</a></li>
-                <li><a href="#" onclick="switchMode('angle')"><i class="fas fa-protractor"></i> Angle Converter</a></li>
-                <li><a href="#" onclick="switchMode('data')"><i class="fas fa-database"></i> Data Converter</a></li>
-                <li><a href="#" onclick="switchMode('power')"><i class="fas fa-bolt"></i> Power Converter</a></li>
-                <li><a href="#" onclick="switchMode('energy')"><i class="fas fa-battery-full"></i> Energy Converter</a></li>
-                <li><a href="#" onclick="switchMode('pressure')"><i class="fas fa-tachometer-alt"></i> Pressure Converter</a></li>
-                <li><a href="#" onclick="switchMode('frequency')"><i class="fas fa-wave-square"></i> Frequency Converter</a></li>
-                <li><a href="#" onclick="switchMode('data-rate')"><i class="fas fa-wifi"></i> Data Rate Converter</a></li>
-            </ul>
-            <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i> Toggle Theme</button>
-            <button class="export-btn" onclick="exportHistory()"><i class="fas fa-download"></i> Export History</button>
-        </div>
+  <aside id="sidebar">
+    <h2>Raja Unnat Tools</h2>
+    <ul id="toolList"></ul>
+  </aside>
+  <main id="main-content">
+    <h1 id="tool-title">बेसिक कैलकुलेटर</h1>
+    <section id="tool-content"></section>
+  </main>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="calculator">
-                <div class="display">
-                    <div id="history"></div>
-                    <input type="text" id="result" readonly>
-                </div>
+<script>
+const tools = [
+  {id:"basic", name:"बेसिक कैलकुलेटर", icon:`<svg fill="currentColor" width="22" height="22" viewBox="0 0 20 20"><path d="M6 6h1v1H6zm0 2h1v1H6zm0 2h1v1H6zm3-4h1v1H9zm0 2h1v1H9zm0 2h1v1H9zm3-6h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2zM5 5h10v10H5z"/></svg>`,
+   load: function(){
+    return `
+    <input id="display" class="calculator-display" value="0" readonly />
+    <div class="button-grid">
+      <button class="calc-btn" onclick="inputCalc('७')">७</button>
+      <button class="calc-btn" onclick="inputCalc('८')">८</button>
+      <button class="calc-btn" onclick="inputCalc('९')">९</button>
+      <button class="calc-btn operator-btn" onclick="inputCalc('/')">÷</button>
+      
+      <button class="calc-btn" onclick="inputCalc('४')">४</button>
+      <button class="calc-btn" onclick="inputCalc('५')">५</button>
+      <button class="calc-btn" onclick="inputCalc('६')">६</button>
+      <button class="calc-btn operator-btn" onclick="inputCalc('*')">×</button>
+      
+      <button class="calc-btn" onclick="inputCalc('१')">१</button>
+      <button class="calc-btn" onclick="inputCalc('२')">२</button>
+      <button class="calc-btn" onclick="inputCalc('३')">३</button>
+      <button class="calc-btn operator-btn" onclick="inputCalc('-')">−</button>
+      
+      <button class="calc-btn" onclick="inputCalc('०')">०</button>
+      <button class="calc-btn" onclick="inputCalc('.')">.</button>
+      <button class="calc-btn clear-btn" onclick="clearCalc()">C</button>
+      <button class="calc-btn operator-btn" onclick="inputCalc('+')">+</button>
+      
+      <button class="calc-btn equal-btn" onclick="evaluateCalc()">=</button>
+    </div>
+    `
+   }
+ },
+ {id:"bmi", name:"BMI कैलकुलेटर", icon:`<svg fill="currentColor" width="22" height="22" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`, 
+   load: function(){
+     return `<label for="height">ऊँचाई (सेमी):</label>
+     <input id="height" type="number" min="30" max="300" placeholder="उदाहरण: 170" />
+     <label for="weight">वजन (किलोग्राम):</label>
+     <input id="weight" type="number" min="1" max="500" placeholder="उदाहरण: 70" />
+     <button class="calc-btn equal-btn" onclick="calculateBMI()">BMI निकालें</button>
+     <div id="bmi-result"></div>`;
+   }
+ },
+ {id:"percentage", name:"प्रतिशत कैलकुलेटर", icon:`<svg fill="currentColor" width="22" height="22" viewBox="0 0 24 24"><line x1="19" y1="5" x2="5" y2="19" stroke-width="2" stroke="currentColor"/><circle cx="6.5" cy="6.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="17.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>`, 
+  load: function(){
+    return `<label for="total-value">कुल मूल्य:</label>
+    <input id="total-value" type="number" min="0" placeholder="कुल मूल्य दर्ज करें" />
+    <label for="part-value">भाग (अंश):</label>
+    <input id="part-value" type="number" min="0" placeholder="भाग दर्ज करें" />
+    <button class="calc-btn equal-btn" onclick="calculatePercentage()">प्रतिशत निकालें</button>
+    <div id="percentage-result"></div>`;
+  }
+},
+{ id: 'currency', name: 'मुद्रा कन्वर्टर', icon: `<svg fill="currentColor" width="22" height="22" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm3 14h-2.15a3 3 0 0 1-4.348 1.533l1.86-2.314a1.5 1.5 0 1 0-2.26-1.987l-1.44 1.796a5.5 5.5 0 1 0 8.338.972zm-1-7h3v2h-3z"/></svg>`,
+  load: function() {
+    return `<label for="inr">रुपये (INR):</label>
+    <input id="inr" type="number" min="0" placeholder="रुपये दर्ज करें" />
+    <label for="usd">डॉलर (USD):</label>
+    <input id="usd" type="number" min="0" placeholder="डॉलर दर्ज करें" />
+    <button class="calc-btn equal-btn" onclick="convertCurrency()">कन्वर्ट करें</button>
+    <div id="currency-result"></div>
+    <p style="font-size:0.9rem; color:#555;">दर: १ INR = ०.०१२ USD (लगभग)</p>`;
+  }
+},
+{ id: 'emi', name: 'EMI कैलकुलेटर', icon: `<svg fill="currentColor" width="22" height="22" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="2"/><rect x="7" y="14" width="10" height="2"/><rect x="8" y="18" width="8" height="2"/></svg>`,
+  load: function() {
+    return `<label for="loanAmount">ऋण राशि (₹):</label>
+    <input type="number" id="loanAmount" min="0" placeholder="ऋण राशि दर्ज करें" />
+    <label for="interestRate">ब्याज दर (% वार्षिक):</label>
+    <input type="number" id="interestRate" step="0.01" min="0" placeholder="ब्याज दर %" />
+    <label for="loanTenure">समय अवधि (महीनों में):</label>
+    <input type="number" id="loanTenure" min="1" placeholder="समय अवधि दर्ज करें" />
+    <button class="calc-btn equal-btn" onclick="calculateEMI()">EMI निकालें</button>
+    <div id="emi-result"></div>`;
+  }
+},
+// Aur converters/calculators jese Tax Calculator, Age Calculator, CGPA, Fuel, ROI, Change, Compound Interest, Loan Amortization, Length, Area, Volume, Speed, Time, Weight, Temperature, Angle, Data, Power, Energy, Pressure, Frequency, Data Rate Converter banaye ja sakte hain isi tarah
 
-                <!-- Basic + Scientific Calculator -->
-                <div class="calculator-section" id="basic-section">
-                    <div class="buttons">
-                        <button onclick="clearDisplay()">C</button>
-                        <button onclick="appendToDisplay('(')">(</button>
-                        <button onclick="appendToDisplay(')')">)</button>
-                        <button onclick="appendToDisplay('/')">/</button>
-                        <button onclick="appendToDisplay('7')">7</button>
-                        <button onclick="appendToDisplay('8')">8</button>
-                        <button onclick="appendToDisplay('9')">9</button>
-                        <button onclick="appendToDisplay('*')">×</button>
-                        <button onclick="appendToDisplay('4')">4</button>
-                        <button onclick="appendToDisplay('5')">5</button>
-                        <button onclick="appendToDisplay('6')">6</button>
-                        <button onclick="appendToDisplay('-')">-</button>
-                        <button onclick="appendToDisplay('1')">1</button>
-                        <button onclick="appendToDisplay('2')">2</button>
-                        <button onclick="appendToDisplay('3')">3</button>
-                        <button onclick="appendToDisplay('+')">+</button>
-                        <button onclick="appendToDisplay('0')">0</button>
-                        <button onclick="appendToDisplay('.')">.</button>
-                        <button onclick="calculate()">=</button>
-                        <button onclick="clearAll()">AC</button>
-                        <button onclick="appendToDisplay('Math.sin(')">sin</button>
-                        <button onclick="appendToDisplay('Math.cos(')">cos</button>
-                        <button onclick="appendToDisplay('Math.tan(')">tan</button>
-                        <button onclick="appendToDisplay('Math.log10(')">log</button>
-                        <button onclick="appendToDisplay('Math.sqrt(')">√</button>
-                        <button onclick="appendToDisplay('**2')">x²</button>
-                        <button onclick="appendToDisplay('Math.PI')">π</button>
-                        <button onclick="appendToDisplay('Math.E')">e</button>
-                    </div>
-                </div>
+];
 
-                <!-- Currency Converter -->
-                <div class="calculator-section" id="currency-section" style="display: none;">
-                    <select id="currency-from-unit">
-                        <option value="USD">USD - US Dollar</option>
-                        <option value="INR">INR - Indian Rupee</option>
-                        <option value="EUR">EUR - Euro</option>
-                        <option value="GBP">GBP - British Pound</option>
-                        <option value="JPY">JPY - Japanese Yen</option>
-                        <option value="AUD">AUD - Australian Dollar</option>
-                        <option value="CAD">CAD - Canadian Dollar</option>
-                        <option value="CHF">CHF - Swiss Franc</option>
-                        <option value="CNY">CNY - Chinese Yuan</option>
+const sidebarList = document.getElementById('toolList');
+const mainTitle = document.getElementById('tool-title');
+const mainContent = document.getElementById('tool-content');
+
+let currentTool = 'basic';
+
+function initSidebar() {
+  tools.forEach(tool => {
+    let li = document.createElement('li');
+    let btn = document.createElement('button');
+    btn.innerHTML = tool.icon + `<span>${tool.name}</span>`;
+    btn.id = 'btn_' + tool.id;
+    btn.onclick = () => {
+      if(currentTool !== tool.id) {
+        currentTool = tool.id;
+        updateActive();
+        loadToolContent(tool.id);
+      }
+    };
+    if(tool.id === currentTool) btn.classList.add('active');
+    li.appendChild(btn);
+    sidebarList.appendChild(li);
+  });
+}
+
+function updateActive() {
+  tools.forEach(tool => {
+    let btn = document.getElementById('btn_' + tool.id);
+    if(tool.id === currentTool) btn.classList.add('active');
+    else btn.classList.remove('active');
+  });
+}
+
+function loadToolContent(id) {
+  let tool = tools.find(t => t.id === id);
+  if(!tool) return;
+  mainTitle.textContent = tool.name;
+  mainContent.innerHTML = tool.load();
+  setupToolLogic(id);
+}
+
+function setupToolLogic(id) {
+  if(id === 'basic') initBasicCalc();
+  else if(id === 'bmi') {}; //already linked, no special setup
+  else if(id === 'percentage') {};
+  else if(id === 'currency') {};
+  else if(id === 'emi') {};
+  // Add more logic setup for other tools here.
+}
+
+// Basic Calculator implementation
+function inputCalc(val) {
+  let display = document.getElementById('display');
+  if(!display) return;
+  if(display.value === '0' || display.value === 'त्रुटि') display.value = '';
+  // Hindi digits to English for eval
+  const hindiToEng = {'०':'0','१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9'};
+  if(/[०-९]/.test(val)) val = hindiToEng[val];
+  display.value += val;
+}
+function clearCalc() {
+  let display = document.getElementById('display');
+  if(!display) return;
+  display.value = '';
+}
+function evaluateCalc() {
+  let display = document.getElementById('display');
+  if(!display) return;
+  try {
+    let val = display.value.replace(/[०-९]/g,d=> {'०':'0','१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9'}[d] || d );
+    let res = eval(val);
+    display.value = res.toString();
+  } catch {
+    display.value = "त्रुटि";
+  }
+}
+// BMI
+function calculateBMI() {
+  let h = parseFloat(document.getElementById('height').value)/100;
+  let w = parseFloat(document.getElementById('weight').value);
+  let output = document.getElementById('bmi-result');
+  if(!h || h <= 0 || !w || w <= 0) {
+    output.textContent = "कृपया सही मान दर्ज करें।";
+    return;
+  }
+  let bmi = (w/(h*h)).toFixed(2);
+  output.textContent = `आपका BMI: ${bmi}`;
+}
+// Percentage
+function calculatePercentage() {
+  let total = parseFloat(document.getElementById('total-value').value);
+  let part = parseFloat(document.getElementById('part-value').value);
+  let output = document.getElementById('percentage-result');
+  if(isNaN(total) || total <= 0 || isNaN(part) || part < 0) {
+    output.textContent = "कृपया मान सही दर्ज करें।";
+    return;
+  }
+  let percent = ((part/total)*100).toFixed(2);
+  output.textContent = `${part} = ${percent}% (कुल ${total})`;
+}
+// Currency
+function convertCurrency() {
+  let inr = parseFloat(document.getElementById('inr').value);
+  let usdField = document.getElementById('usd');
+  let output = document.getElementById('currency-result');
+  if(isNaN(inr) || inr < 0) {
+    output.textContent = "कृपया सही राशि दर्ज करें।";
+    return;
+  }
+  let usd = (inr * 0.012).toFixed(4);
+  usdField.value = usd;
+  output.textContent = `${inr} INR ≈ ${usd} USD`;
+}
+// EMI
+function calculateEMI() {
+  let P = parseFloat(document.getElementById('loanAmount').value);
+  let R = parseFloat(document.getElementById('interestRate').value);
+  let N = parseInt(document.getElementById('loanTenure').value);
+  let output = document.getElementById('emi-result');
+  if(!P || P <= 0 || !R || R < 0 || !N || N <= 0) {
+    output.textContent = "कृपया सारे मान सही दर्ज करें।";
+    return;
+  }
+  let r = R/(12*100);
+  let emi = (P*r*Math.pow(1+r,N)) / (Math.pow(1+r,N)-1);
+  output.textContent = `महीना EMI: ₹${emi.toFixed(2)}`;
+}
+
+initSidebar();
+loadToolContent(currentTool);
+</script>
+</body>
+</html>
                         <option value="SGD">SGD - Singapore Dollar</option>
                     </select>
                     <input type="number" id="currency-amount" placeholder="Enter amount">
