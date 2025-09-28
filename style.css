@@ -1,109 +1,214 @@
-let currentMode = 'basic';
-let history = [];
-const API_KEY = '7b46c9d6348fe49e3acccd34'; // Your provided API key
-
-function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('collapsed');
-    document.querySelector('.main-content').classList.toggle('collapsed');
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-function toggleTheme() {
-    document.body.classList.toggle('dark-mode');
+body, html {
+  margin: 0; padding: 0; height: 100vh;
+  display: flex; overflow: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #222;
 }
-
-function switchMode(mode) {
-    currentMode = mode;
-    document.querySelectorAll('.calculator-section').forEach(section => {
-        section.style.display = section.id === ${mode}-section ? 'block' : 'none';
-    });
-    clearDisplay();
+#sidebar {
+  background: #2c2c54;
+  min-width: 260px;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+  border-right: 3px solid #9c88ff;
+  color: white;
+  overflow-y: auto;
 }
-
-function appendToDisplay(value) {
-    document.getElementById('result').value += value;
+#sidebar h2 {
+  margin-left: 20px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  user-select: none;
 }
-
-function clearDisplay() {
-    document.getElementById('result').value = '';
+#sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
 }
-
-function clearAll() {
-    document.getElementById('result').value = '';
-    document.getElementById('history').innerText = '';
-    history = [];
+#sidebar ul li {
+  width: 100%;
 }
-
-function exportHistory() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.setFontSize(12);
-    doc.text('Raja Unnat Calculator History', 10, 10);
-    doc.text(history.join('\n'), 10, 20);
-    doc.save('calculator_history.pdf');
+#sidebar ul li button {
+  background: transparent;
+  border: none;
+  padding: 12px 16px;
+  width: 100%;
+  text-align: left;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  user-select: none;
+  transition: background 0.3s, color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-
-function calculate() {
-    try {
-        const expression = document.getElementById('result').value;
-        const result = eval(expression); // Replace with math.js in production
-        if (isNaN(result) || !isFinite(result)) {
-            throw new Error('Invalid calculation');
-        }
-        document.getElementById('result').value = result;
-        history.push(${expression} = ${result});
-        document.getElementById('history').innerText = history.join('\n');
-    } catch (error) {
-        document.getElementById('result').value = 'Error: Invalid calculation';
-    }
+#sidebar ul li button.active, #sidebar ul li button:hover {
+  background: #9c88ff;
+  color: #2c2c54;
+  font-weight: 700;
 }
-
-async function convertCurrency() {
-    const amount = parseFloat(document.getElementById('currency-amount').value);
-    const fromUnit = document.getElementById('currency-from-unit').value;
-    const toUnit = document.getElementById('currency-to-unit').value;
-    
-    if (isNaN(amount) || amount < 0) {
-        document.getElementById('result').value = 'Please enter a valid amount';
-        return;
-    }
-    
-    try {
-        const response = await fetch(https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${fromUnit});
-        const data = await response.json();
-        if (data.result !== 'success') {
-            throw new Error('API Error');
-        }
-        const rate = data.conversion_rates[toUnit];
-        const result = (amount * rate).toFixed(2);
-        document.getElementById('result').value = ${result} ${toUnit};
-        history.push(${amount} ${fromUnit} = ${result} ${toUnit});
-        document.getElementById('history').innerText = history.join('\n');
-    } catch (error) {
-        document.getElementById('result').value = 'Error: Unable to fetch rates';
-    }
+#content {
+  flex-grow: 1;
+  padding: 25px 30px;
+  background: white;
+  border-radius: 0 12px 12px 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
 }
-
-function convertLength() {
-    const amount = parseFloat(document.getElementById('length-amount').value);
-    const fromUnit = document.getElementById('length-from-unit').value;
-    const toUnit = document.getElementById('length-to-unit').value;
-    
-    const conversions = {
-        m: 1,
-        km: 1000,
-        cm: 0.01,
-        mm: 0.001,
-        mi: 1609.34,
-        ft: 0.3048,
-        in: 0.0254
-    };
-    
-    if (isNaN(amount) || amount < 0) {
-        document.getElementById('result').value = 'Please enter a valid length';
-        return;
-    }
-    
-    const result = (amount * conversions[fromUnit] / conversions[toUnit]).toFixed(4);
+#content h1 {
+  font-size: 1.9rem;
+  margin-bottom: 25px;
+  color: #764ba2;
+  user-select: none;
+}
+.tab-pane {
+  display: none;
+}
+.tab-pane.active {
+  display: block;
+}
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+input, select {
+  width: 100%;
+  padding: 9px 12px;
+  margin-bottom: 18px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: 1.8px solid #ccc;
+  transition: border-color 0.3s;
+  outline: none;
+}
+input:focus, select:focus {
+  border-color: #764ba2;
+  box-shadow: 0 0 8px #a085f9;
+}
+button.calc-btn {
+  font-weight: 800;
+  padding: 14px 0;
+  border-radius: 12px;
+  border: none;
+  width: 100%;
+  font-size: 1.3rem;
+  cursor: pointer;
+  background: linear-gradient(45deg, #764ba2, #9c88ff);
+  color: white;
+  user-select: none;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 8px #a085f9aa;
+  transition: background 0.3s ease;
+}
+button.calc-btn:hover {
+  background: linear-gradient(45deg, #573a82, #7a5fc5);
+}
+#output {
+  font-size: 1.3rem;
+  font-weight: 700;
+  min-height: 56px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: #333;
+  box-shadow: inset 0 0 8px #ccc;
+  user-select: text;
+}
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  max-width: 360px;
+  user-select: none;
+  margin-bottom: 24px;
+}
+.calc-grid button {
+  padding: 16px 0;
+  font-size: 1.2rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  background: linear-gradient(45deg,#764ba2,#9e90f7);
+  color: white;
+  box-shadow: 0 4px 8px #a085f9aa;
+  transition: all 0.15s ease;
+}
+.calc-grid button:hover {
+  filter: brightness(1.15);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px #886fcc;
+}
+.calc-grid button.operator-btn {
+  background: linear-gradient(45deg, #d64545, #ff6c6c);
+}
+.calc-grid button.clear-btn {
+  background: linear-gradient(45deg, #7a2a2a, #f52727);
+}
+.calc-grid button.equal-btn {
+  grid-column: span 4;
+  background: linear-gradient(45deg, #42b983, #67d68d);
+}
+@media(max-width:720px) {
+  #sidebar {
+    width: 100%;
+    max-width: none;
+    border-right: none;
+    border-bottom: 3px solid #9c88ff;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 1rem 0;
+  }
+  #sidebar h2 {
+    display: none;
+  }
+  #sidebar ul {
+    flex-direction: row;
+    gap: 12px;
+    margin: 0 15px;
+  }
+  #sidebar ul li {
+    min-width: 90px;
+  }
+  #sidebar ul li button {
+    border-left: none;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  #sidebar ul li button span {
+    font-size: 0.9rem;
+  }
+  #main-content {
+    height: 55vh;
+    border-radius: 0;
+    padding: 22px 14px;
+    overflow-y: auto;
+  }
+  .calc-grid {
+    max-width: 100%;
+  }
+}
     document.getElementById('result').value = ${result} ${toUnit};
     history.push(${amount} ${fromUnit} = ${result} ${toUnit});
     document.getElementById('history').innerText = history.join('\n');
