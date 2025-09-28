@@ -1,93 +1,65 @@
-// --- Sidebar Toggle ---
-document.querySelectorAll('.tool').forEach(tool => {
-  tool.addEventListener('click', () => {
-    document.querySelectorAll('.tool').forEach(t => t.classList.remove('active'));
-    tool.classList.add('active');
-    const selected = tool.getAttribute('data-tool');
-    document.querySelectorAll('.tool-section').forEach(sec => sec.classList.remove('active'));
-    document.getElementById(selected).classList.add('active');
+// Left sidebar tab buttons and content panes
+const tabs = document.querySelectorAll('#sidebar-list button');
+const tabPanes = document.querySelectorAll('.tab-pane');
+const tabTitle = document.getElementById('tab-title');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    const target = tab.getAttribute('data-tab');
+    tabPanes.forEach(pane => {
+      if(pane.id === target) pane.classList.add('active');
+      else pane.classList.remove('active');
+    });
+    tabTitle.innerText = tab.innerText;
   });
 });
 
-// --- Scientific + Basic Calculator ---
-const sciDisplay = document.getElementById('sci-display');
-let sciExp = '';
-function addSci(c) { sciExp += c; sciDisplay.value = sciExp; }
-function calcSci() {
-  try {
-    let result = Function('"use strict";return (' + sciExp + ')')();
-    sciDisplay.value = result;
-    sciExp = result.toString();
-  } catch {
-    sciDisplay.value = 'Error';
-    sciExp = '';
+// Calculator logic
+const display = document.getElementById('calcDisplay');
+function press(value) {
+  if(display.value === "0" || display.value === "त्रुटि") {
+    display.value = value;
+  } else {
+    display.value += value;
   }
 }
-function clearSci() { sciExp = ''; sciDisplay.value = ''; }
+function clearCalc() {
+  display.value = "0";
+}
+function calculate() {
+  try {
+    const hindiToEng = {'०':'0','१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9'};
+    let val = display.value.replace(/[०-९]/g, d => hindiToEng[d]);
+    let result = eval(val);
+    display.value = result.toString();
+  } catch {
+    display.value = "त्रुटि";
+  }
+}
 
-const sciButtons = [
-  '7','8','9','+',
-  '4','5','6','-',
-  '1','2','3','*',
-  '0','.','=','/',
-  'Math.sin(','Math.cos(','Math.tan(','Math.log(',
-  'Math.sqrt(','Math.PI','Math.E','C'
-];
-sciButtons.forEach(c => {
-  const b = document.createElement('button');
-  b.innerText = c === 'Math.PI' ? 'π' : c === 'Math.E' ? 'e' : c.replace('Math.', '');
-  b.onclick = () => {
-    if (c === '=') calcSci();
-    else if (c === 'C') clearSci();
-    else addSci(c);
-  };
-  document.getElementById('sci-buttons').append(b);
+// Length Converter logic:
+document.getElementById('lengthInput').addEventListener('input', e => {
+  const meters = parseFloat(e.target.value) || 0;
+  document.getElementById('lengthKilometer').textContent = (meters / 1000).toFixed(5);
+  document.getElementById('lengthMeter').textContent = meters.toFixed(5);
+  document.getElementById('lengthFeet').textContent = (meters * 3.28084).toFixed(5);
+  document.getElementById('lengthInch').textContent = (meters * 39.3701).toFixed(5);
 });
 
-// --- BMI Calculator ---
-document.getElementById('calc-bmi').onclick = () => {
-  const w = parseFloat(document.getElementById('bmi-weight').value);
-  const h = parseFloat(document.getElementById('bmi-height').value) / 100;
-  const bmi = (w / (h * h)).toFixed(2);
-  const cat = bmi < 18.5 ? 'Underweight' :
-              bmi < 25 ? 'Normal' :
-              bmi < 30 ? 'Overweight' : 'Obese';
-  document.getElementById('bmi-result').innerText = isNaN(bmi) ? 'Error' : `${bmi} (${cat})`;
-};
+// Area Converter logic:
+document.getElementById('areaInput').addEventListener('input', e=>{
+  const acres = parseFloat(e.target.value) || 0;
+  document.getElementById('areaSquareMeter').textContent = (acres * 4046.86).toFixed(5);
+  document.getElementById('areaAre').textContent = (acres * 40.4686).toFixed(5);
+  document.getElementById('acre').textContent = acres.toFixed(5);
+});
 
-// --- Percentage Calculator ---
-document.getElementById('calc-perc').onclick = () => {
-  const base = parseFloat(document.getElementById('perc-base').value);
-  const perc = parseFloat(document.getElementById('perc-percent').value);
-  const res = (base * perc / 100).toFixed(2);
-  document.getElementById('perc-result').innerText = isNaN(res) ? 'Error' : res;
-};
-
-// --- Currency Converter ---
-(async () => {
-  const key = 'YOUR_API_KEY'; // Replace with your own exchangerate-api.com key
-  try {
-    const res = await fetch(`https://v6.exchangerate-api.com/v6/${key}/latest/USD`);
-    const data = await res.json();
-    const rates = data.conversion_rates;
-    const from = document.getElementById('curr-from');
-    const to = document.getElementById('curr-to');
-    Object.keys(rates).forEach(k => {
-      from.append(new Option(k, k));
-      to.append(new Option(k, k));
-    });
-    document.getElementById('calc-curr').onclick = () => {
-      const amt = parseFloat(document.getElementById('curr-amount').value);
-      const f = from.value;
-      const t = to.value;
-      if (isNaN(amt)) {
-        document.getElementById('curr-result').innerText = 'Error';
-        return;
-      }
-      const result = (amt * rates[t] / rates[f]).toFixed(2);
-      document.getElementById('curr-result').innerText = result;
-    };
-  } catch (e) {
-    document.getElementById('curr-result').innerText = 'API Error';
-  }
-})();
+// Volume Converter logic:
+document.getElementById('volumeInput').addEventListener('input', e=>{
+  const liters = parseFloat(e.target.value) || 0;
+  document.getElementById('volumeGallon').textContent = (liters * 0.264172).toFixed(5);
+  document.getElementById('volumeCubicMeter').textContent = (liters / 1000).toFixed(5);
+});
