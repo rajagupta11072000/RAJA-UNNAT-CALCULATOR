@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raja Unnat Calculator + Converter</title>
+  <title>Modern Calculator + Converter</title>
   <link rel="stylesheet" href="calculator_and_converter.css" />
 </head>
 <body>
@@ -27,7 +27,6 @@
       <li><button data-tab="dataRateConverter">Data Rate</button></li>
     </ul>
   </nav>
-
   <main id="content">
     <h1 id="tab-title">Calculator</h1>
     <div id="tab-contents">
@@ -54,56 +53,110 @@
           <button class="equal-btn" onclick="calculate()">=</button>
         </div>
       </div>
-
-      <!-- Length Converter Tab -->
+      <!-- LENGTH -->
       <div id="lengthConverter" class="tab-pane">
-        <label>Value (Meters):</label>
-        <input type="number" id="lengthInput" placeholder="किलोमीटर में मान दर्ज करें" />
+        <label>मीटर:</label>
+        <input type="number" id="lengthInput" placeholder="मान दर्ज करें (मीटर में)" />
         <p><b>किलोमीटर:</b> <span id="lengthKilometer">0</span></p>
-        <p><b>मीटर:</b> <span id="lengthMeter">0</span></p>
         <p><b>फीट:</b> <span id="lengthFeet">0</span></p>
         <p><b>इंच:</b> <span id="lengthInch">0</span></p>
       </div>
-
-      <!-- Area Converter Tab -->
+      <!-- AREA -->
       <div id="areaConverter" class="tab-pane">
-        <label>Value (Acre):</label>
-        <input type="number" id="areaInput" placeholder="मूल्य दर्ज करें" />
+        <label>एकड़:</label>
+        <input type="number" id="areaInput" placeholder="मान दर्ज करें (एकड़ में)" />
         <p><b>Square Meter:</b> <span id="areaSquareMeter">0</span></p>
-        <p><b>Area (Are):</b> <span id="areaAre">0</span></p>
-        <p><b>Acre:</b> <span id="acre">0</span></p>
+        <p><b>Are:</b> <span id="areaAre">0</span></p>
       </div>
-
-      <!-- Volume Converter Tab -->
+      <!-- VOLUME -->
       <div id="volumeConverter" class="tab-pane">
-        <label>Value (Liter):</label>
-        <input type="number" id="volumeInput" placeholder="मूल्य दर्ज करें" />
+        <label>लीटर:</label>
+        <input type="number" id="volumeInput" placeholder="मान दर्ज करें (लीटर में)" />
         <p><b>US Gallon:</b> <span id="volumeGallon">0</span></p>
         <p><b>Cubic Meter:</b> <span id="volumeCubicMeter">0</span></p>
       </div>
-
-      <!-- More tabs can be added similarly -->
-
+      <!-- TIME -->
+      <div id="timeConverter" class="tab-pane">
+        <label>घंटा:</label>
+        <input type="number" id="timeInput" placeholder="मान दर्ज करें (घंटा)" />
+        <p><b>मिनट:</b> <span id="timeMinute">0</span></p>
+        <p><b>सेकंड:</b> <span id="timeSecond">0</span></p>
+      </div>
+      <!-- SPEED -->
+      <div id="speedConverter" class="tab-pane">
+        <label>किमी/घंटा:</label>
+        <input type="number" id="speedInput" placeholder="मान दर्ज करें (किमी/घंटा)" />
+        <p><b>मीटर/सेकंड:</b> <span id="speedMS">0</span></p>
+        <p><b>मील/घंटा:</b> <span id="speedMPH">0</span></p>
+      </div>
+      <!-- WEIGHT -->
+      <div id="weightConverter" class="tab-pane">
+        <label>किलोग्राम:</label>
+        <input type="number" id="weightInput" placeholder="मान दर्ज करें (किलोग्राम)" />
+        <p><b>ग्राम:</b> <span id="weightGram">0</span></p>
+        <p><b>पाउंड:</b> <span id="weightPound">0</span></p>
+      </div>
+      <!-- TEMPERATURE -->
+      <div id="tempConverter" class="tab-pane">
+        <label>सेल्सियस:</label>
+        <input type="number" id="tempInput" placeholder="मान दर्ज करें (°C)" />
+        <p><b>फारेनहाइट:</b> <span id="tempF">0</span></p>
+        <p><b>केलविन:</b> <span id="tempK">0</span></p>
+      </div>
+      <!-- ANGLE -->
+      <div id="angleConverter" class="tab-pane">
+        <label>डिग्री:</label>
+        <input type="number" id="angleInput" placeholder="मान दर्ज करें (डिग्री)" />
+        <p><b>रेडियन:</b> <span id="angleRad">0</span></p>
+        <p><b>ग्रैड:</b> <span id="angleGrad">0</span></p>
+      </div>
+      <!-- DATA -->
+      <div id="dataConverter" class="tab-pane">
+        <label>मेगाबाइट:</label>
+        <input type="number" id="dataInput" placeholder="मान दर्ज करें (MB)" />
+        <p><b>किलोबाइट:</b> <span id="dataKB">0</span></p>
+        <p><b>गिगाबाइट:</b> <span id="dataGB">0</span></p>
+      </div>
+      <!-- POWER -->
+      <div id="powerConverter" class="tab-pane">
+        <label>वाट:</label>
+        <input type="number" id="powerInput" placeholder="मान दर्ज करें (W)" />
+        <p><b>किलोवाट:</b> <span id="powerKW">0</span></p>
+        <p><b>हॉर्सपावर:</b> <span id="powerHP">0</span></p>
+      </div>
+      <!-- ENERGY -->
+      <div id="energyConverter" class="tab-pane">
+        <label>जूल:</label>
+        <input type="number" id="energyInput" placeholder="मान दर्ज करें (Joule)" />
+        <p><b>कैलोरी:</b> <span id="energyCal">0</span></p>
+        <p><b>किलोवाट-घंटा:</b> <span id="energyKWh">0</span></p>
+      </div>
+      <!-- PRESSURE -->
+      <div id="pressureConverter" class="tab-pane">
+        <label>पास्कल:</label>
+        <input type="number" id="pressureInput" placeholder="मान दर्ज करें (Pa)" />
+        <p><b>बार:</b> <span id="pressureBar">0</span></p>
+        <p><b>एटमॉस्फियर:</b> <span id="pressureAtm">0</span></p>
+      </div>
+      <!-- FREQUENCY -->
+      <div id="frequencyConverter" class="tab-pane">
+        <label>हर्ट्ज:</label>
+        <input type="number" id="freqInput" placeholder="मान दर्ज करें (Hz)" />
+        <p><b>किलोहर्ट्ज:</b> <span id="freqKHz">0</span></p>
+        <p><b>मेगाहर्ट्ज:</b> <span id="freqMHz">0</span></p>
+      </div>
+      <!-- DATA RATE -->
+      <div id="dataRateConverter" class="tab-pane">
+        <label>Mbps:</label>
+        <input type="number" id="dataRateInput" placeholder="मान दर्ज करें (Mbps)" />
+        <p><b>Kbps:</b> <span id="dataRateKbps">0</span></p>
+        <p><b>Gbps:</b> <span id="dataRateGbps">0</span></p>
+      </div>
     </div>
   </main>
-
   <script src="calculator_and_converter.js"></script>
 </body>
 </html>
-  <main id="main-content">
-    <h1 id="tool-title">बेसिक कैलकुलेटर</h1>
-    <section id="tool-content"></section>
-  </main>
-
-<script>
-const tools = [
-  {id:"basic", name:"बेसिक कैलकुलेटर", icon:`<svg fill="currentColor" width="22" height="22" viewBox="0 0 20 20"><path d="M6 6h1v1H6zm0 2h1v1H6zm0 2h1v1H6zm3-4h1v1H9zm0 2h1v1H9zm0 2h1v1H9zm3-6h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2zM5 5h10v10H5z"/></svg>`,
-   load: function(){
-    return `
-    <input id="display" class="calculator-display" value="0" readonly />
-    <div class="button-grid">
-      <button class="calc-btn" onclick="inputCalc('७')">७</button>
-      <button class="calc-btn" onclick="inputCalc('८')">८</button>
       <button class="calc-btn" onclick="inputCalc('९')">९</button>
       <button class="calc-btn operator-btn" onclick="inputCalc('/')">÷</button>
       
