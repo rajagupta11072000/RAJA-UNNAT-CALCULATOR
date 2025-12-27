@@ -1,705 +1,77 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Modern Calculator + Converter</title>
-  <link rel="stylesheet" href="calculator_and_converter.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raja Advanced Calculator</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <nav id="sidebar">
-    <h2>Raja Unnat</h2>
-    <ul id="sidebar-list">
-      <li><button class="active" data-tab="calculator">कैल्कुलेटर</button></li>
-      <li><button data-tab="lengthConverter">Length</button></li>
-      <li><button data-tab="areaConverter">Area</button></li>
-      <li><button data-tab="volumeConverter">Volume</button></li>
-      <li><button data-tab="timeConverter">Time</button></li>
-      <li><button data-tab="speedConverter">Speed</button></li>
-      <li><button data-tab="weightConverter">Weight</button></li>
-      <li><button data-tab="tempConverter">Temperature</button></li>
-      <li><button data-tab="angleConverter">Angle</button></li>
-      <li><button data-tab="dataConverter">Data</button></li>
-      <li><button data-tab="powerConverter">Power</button></li>
-      <li><button data-tab="energyConverter">Energy</button></li>
-      <li><button data-tab="pressureConverter">Pressure</button></li>
-      <li><button data-tab="frequencyConverter">Frequency</button></li>
-      <li><button data-tab="dataRateConverter">Data Rate</button></li>
-    </ul>
-  </nav>
-  <main id="content">
-    <h1 id="tab-title">Calculator</h1>
-    <div id="tab-contents">
-      <!-- Calculator Tab -->
-      <div id="calculator" class="tab-pane active">
-        <input readonly id="calcDisplay" class="calculator-display" value="0" />
-        <div class="calc-grid">
-          <button onclick="press('७')">७</button>
-          <button onclick="press('८')">८</button>
-          <button onclick="press('९')">९</button>
-          <button class="operator-btn" onclick="press('/')">÷</button>
-          <button onclick="press('४')">४</button>
-          <button onclick="press('५')">५</button>
-          <button onclick="press('६')">६</button>
-          <button class="operator-btn" onclick="press('*')">×</button>
-          <button onclick="press('१')">१</button>
-          <button onclick="press('२')">२</button>
-          <button onclick="press('३')">३</button>
-          <button class="operator-btn" onclick="press('-')">−</button>
-          <button onclick="press('०')">०</button>
-          <button onclick="press('.')">.</button>
-          <button class="clear-btn" onclick="clearCalc()">C</button>
-          <button class="operator-btn" onclick="press('+')">+</button>
-          <button class="equal-btn" onclick="calculate()">=</button>
-        </div>
-      </div>
-      <!-- LENGTH -->
-      <div id="lengthConverter" class="tab-pane">
-        <label>मीटर:</label>
-        <input type="number" id="lengthInput" placeholder="मान दर्ज करें (मीटर में)" />
-        <p><b>किलोमीटर:</b> <span id="lengthKilometer">0</span></p>
-        <p><b>फीट:</b> <span id="lengthFeet">0</span></p>
-        <p><b>इंच:</b> <span id="lengthInch">0</span></p>
-      </div>
-      <!-- AREA -->
-      <div id="areaConverter" class="tab-pane">
-        <label>एकड़:</label>
-        <input type="number" id="areaInput" placeholder="मान दर्ज करें (एकड़ में)" />
-        <p><b>Square Meter:</b> <span id="areaSquareMeter">0</span></p>
-        <p><b>Are:</b> <span id="areaAre">0</span></p>
-      </div>
-      <!-- VOLUME -->
-      <div id="volumeConverter" class="tab-pane">
-        <label>लीटर:</label>
-        <input type="number" id="volumeInput" placeholder="मान दर्ज करें (लीटर में)" />
-        <p><b>US Gallon:</b> <span id="volumeGallon">0</span></p>
-        <p><b>Cubic Meter:</b> <span id="volumeCubicMeter">0</span></p>
-      </div>
-      <!-- TIME -->
-      <div id="timeConverter" class="tab-pane">
-        <label>घंटा:</label>
-        <input type="number" id="timeInput" placeholder="मान दर्ज करें (घंटा)" />
-        <p><b>मिनट:</b> <span id="timeMinute">0</span></p>
-        <p><b>सेकंड:</b> <span id="timeSecond">0</span></p>
-      </div>
-      <!-- SPEED -->
-      <div id="speedConverter" class="tab-pane">
-        <label>किमी/घंटा:</label>
-        <input type="number" id="speedInput" placeholder="मान दर्ज करें (किमी/घंटा)" />
-        <p><b>मीटर/सेकंड:</b> <span id="speedMS">0</span></p>
-        <p><b>मील/घंटा:</b> <span id="speedMPH">0</span></p>
-      </div>
-      <!-- WEIGHT -->
-      <div id="weightConverter" class="tab-pane">
-        <label>किलोग्राम:</label>
-        <input type="number" id="weightInput" placeholder="मान दर्ज करें (किलोग्राम)" />
-        <p><b>ग्राम:</b> <span id="weightGram">0</span></p>
-        <p><b>पाउंड:</b> <span id="weightPound">0</span></p>
-      </div>
-      <!-- TEMPERATURE -->
-      <div id="tempConverter" class="tab-pane">
-        <label>सेल्सियस:</label>
-        <input type="number" id="tempInput" placeholder="मान दर्ज करें (°C)" />
-        <p><b>फारेनहाइट:</b> <span id="tempF">0</span></p>
-        <p><b>केलविन:</b> <span id="tempK">0</span></p>
-      </div>
-      <!-- ANGLE -->
-      <div id="angleConverter" class="tab-pane">
-        <label>डिग्री:</label>
-        <input type="number" id="angleInput" placeholder="मान दर्ज करें (डिग्री)" />
-        <p><b>रेडियन:</b> <span id="angleRad">0</span></p>
-        <p><b>ग्रैड:</b> <span id="angleGrad">0</span></p>
-      </div>
-      <!-- DATA -->
-      <div id="dataConverter" class="tab-pane">
-        <label>मेगाबाइट:</label>
-        <input type="number" id="dataInput" placeholder="मान दर्ज करें (MB)" />
-        <p><b>किलोबाइट:</b> <span id="dataKB">0</span></p>
-        <p><b>गिगाबाइट:</b> <span id="dataGB">0</span></p>
-      </div>
-      <!-- POWER -->
-      <div id="powerConverter" class="tab-pane">
-        <label>वाट:</label>
-        <input type="number" id="powerInput" placeholder="मान दर्ज करें (W)" />
-        <p><b>किलोवाट:</b> <span id="powerKW">0</span></p>
-        <p><b>हॉर्सपावर:</b> <span id="powerHP">0</span></p>
-      </div>
-      <!-- ENERGY -->
-      <div id="energyConverter" class="tab-pane">
-        <label>जूल:</label>
-        <input type="number" id="energyInput" placeholder="मान दर्ज करें (Joule)" />
-        <p><b>कैलोरी:</b> <span id="energyCal">0</span></p>
-        <p><b>किलोवाट-घंटा:</b> <span id="energyKWh">0</span></p>
-      </div>
-      <!-- PRESSURE -->
-      <div id="pressureConverter" class="tab-pane">
-        <label>पास्कल:</label>
-        <input type="number" id="pressureInput" placeholder="मान दर्ज करें (Pa)" />
-        <p><b>बार:</b> <span id="pressureBar">0</span></p>
-        <p><b>एटमॉस्फियर:</b> <span id="pressureAtm">0</span></p>
-      </div>
-      <!-- FREQUENCY -->
-      <div id="frequencyConverter" class="tab-pane">
-        <label>हर्ट्ज:</label>
-        <input type="number" id="freqInput" placeholder="मान दर्ज करें (Hz)" />
-        <p><b>किलोहर्ट्ज:</b> <span id="freqKHz">0</span></p>
-        <p><b>मेगाहर्ट्ज:</b> <span id="freqMHz">0</span></p>
-      </div>
-      <!-- DATA RATE -->
-      <div id="dataRateConverter" class="tab-pane">
-        <label>Mbps:</label>
-        <input type="number" id="dataRateInput" placeholder="मान दर्ज करें (Mbps)" />
-        <p><b>Kbps:</b> <span id="dataRateKbps">0</span></p>
-        <p><b>Gbps:</b> <span id="dataRateGbps">0</span></p>
-      </div>
+
+    <div id="app">
+
+        <!-- SIDEBAR -->
+        <aside id="sidebar">
+            <h2 class="logo">⚡ Raja Calc Pro</h2>
+            <button class="tab-btn" data-tab="basic">Basic Calculator</button>
+            <button class="tab-btn" data-tab="scientific">Scientific</button>
+            <button class="tab-btn" data-tab="converter">Unit Converter</button>
+            <button class="tab-btn" data-tab="currency">Currency</button>
+            <button class="tab-btn" data-tab="finance">Finance Tools</button>
+            <button class="tab-btn" data-tab="history">History</button>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main id="content">
+
+            <!-- BASIC CALCULATOR -->
+            <section id="basic" class="tab-page active">
+                <h1>Basic Calculator</h1>
+                <div id="basic-calc"></div>
+            </section>
+
+            <!-- SCIENTIFIC CALCULATOR -->
+            <section id="scientific" class="tab-page">
+                <h1>Scientific Calculator</h1>
+                <div id="scientific-calc"></div>
+            </section>
+
+            <!-- UNIT CONVERTER -->
+            <section id="converter" class="tab-page">
+                <h1>Unit Converter</h1>
+                <div id="converter-area"></div>
+            </section>
+
+            <!-- CURRENCY CONVERTER -->
+            <section id="currency" class="tab-page">
+                <h1>Currency Converter</h1>
+                <div id="currency-area"></div>
+            </section>
+
+            <!-- FINANCE CALCULATOR -->
+            <section id="finance" class="tab-page">
+                <h1>Finance Toolkit</h1>
+                <div id="finance-area"></div>
+            </section>
+
+            <!-- HISTORY -->
+            <section id="history" class="tab-page">
+                <h1>History</h1>
+                <ul id="history-list"></ul>
+            </section>
+
+        </main>
+
     </div>
-  </main>
-  <script src="calculator_and_converter.js"></script>
+
+    <!-- JS FILES -->
+    <script src="js/main.js"></script>
+    <script src="js/basic-calculator.js"></script>
+    <script src="js/scientific-calculator.js"></script>
+    <script src="js/converters.js"></script>
+    <script src="js/finance.js"></script>
+    <script src="js/history.js"></script>
+
 </body>
 </html>
-      <button class="calc-btn" onclick="inputCalc('९')">९</button>
-      <button class="calc-btn operator-btn" onclick="inputCalc('/')">÷</button>
-      
-      <button class="calc-btn" onclick="inputCalc('४')">४</button>
-      <button class="calc-btn" onclick="inputCalc('५')">५</button>
-      <button class="calc-btn" onclick="inputCalc('६')">६</button>
-      <button class="calc-btn operator-btn" onclick="inputCalc('*')">×</button>
-      
-      <button class="calc-btn" onclick="inputCalc('१')">१</button>
-      <button class="calc-btn" onclick="inputCalc('२')">२</button>
-      <button class="calc-btn" onclick="inputCalc('३')">३</button>
-      <button class="calc-btn operator-btn" onclick="inputCalc('-')">−</button>
-      
-      <button class="calc-btn" onclick="inputCalc('०')">०</button>
-      <button class="calc-btn" onclick="inputCalc('.')">.</button>
-      <button class="calc-btn clear-btn" onclick="clearCalc()">C</button>
-      <button class="calc-btn operator-btn" onclick="inputCalc('+')">+</button>
-      
-      <button class="calc-btn equal-btn" onclick="evaluateCalc()">=</button>
-    </div>
-    `
-   }
- },
- {id:"bmi", name:"BMI कैलकुलेटर", icon:`<svg fill="currentColor" width="22" height="22" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`, 
-   load: function(){
-     return `<label for="height">ऊँचाई (सेमी):</label>
-     <input id="height" type="number" min="30" max="300" placeholder="उदाहरण: 170" />
-     <label for="weight">वजन (किलोग्राम):</label>
-     <input id="weight" type="number" min="1" max="500" placeholder="उदाहरण: 70" />
-     <button class="calc-btn equal-btn" onclick="calculateBMI()">BMI निकालें</button>
-     <div id="bmi-result"></div>`;
-   }
- },
- {id:"percentage", name:"प्रतिशत कैलकुलेटर", icon:`<svg fill="currentColor" width="22" height="22" viewBox="0 0 24 24"><line x1="19" y1="5" x2="5" y2="19" stroke-width="2" stroke="currentColor"/><circle cx="6.5" cy="6.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="17.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>`, 
-  load: function(){
-    return `<label for="total-value">कुल मूल्य:</label>
-    <input id="total-value" type="number" min="0" placeholder="कुल मूल्य दर्ज करें" />
-    <label for="part-value">भाग (अंश):</label>
-    <input id="part-value" type="number" min="0" placeholder="भाग दर्ज करें" />
-    <button class="calc-btn equal-btn" onclick="calculatePercentage()">प्रतिशत निकालें</button>
-    <div id="percentage-result"></div>`;
-  }
-},
-{ id: 'currency', name: 'मुद्रा कन्वर्टर', icon: `<svg fill="currentColor" width="22" height="22" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm3 14h-2.15a3 3 0 0 1-4.348 1.533l1.86-2.314a1.5 1.5 0 1 0-2.26-1.987l-1.44 1.796a5.5 5.5 0 1 0 8.338.972zm-1-7h3v2h-3z"/></svg>`,
-  load: function() {
-    return `<label for="inr">रुपये (INR):</label>
-    <input id="inr" type="number" min="0" placeholder="रुपये दर्ज करें" />
-    <label for="usd">डॉलर (USD):</label>
-    <input id="usd" type="number" min="0" placeholder="डॉलर दर्ज करें" />
-    <button class="calc-btn equal-btn" onclick="convertCurrency()">कन्वर्ट करें</button>
-    <div id="currency-result"></div>
-    <p style="font-size:0.9rem; color:#555;">दर: १ INR = ०.०१२ USD (लगभग)</p>`;
-  }
-},
-{ id: 'emi', name: 'EMI कैलकुलेटर', icon: `<svg fill="currentColor" width="22" height="22" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="2"/><rect x="7" y="14" width="10" height="2"/><rect x="8" y="18" width="8" height="2"/></svg>`,
-  load: function() {
-    return `<label for="loanAmount">ऋण राशि (₹):</label>
-    <input type="number" id="loanAmount" min="0" placeholder="ऋण राशि दर्ज करें" />
-    <label for="interestRate">ब्याज दर (% वार्षिक):</label>
-    <input type="number" id="interestRate" step="0.01" min="0" placeholder="ब्याज दर %" />
-    <label for="loanTenure">समय अवधि (महीनों में):</label>
-    <input type="number" id="loanTenure" min="1" placeholder="समय अवधि दर्ज करें" />
-    <button class="calc-btn equal-btn" onclick="calculateEMI()">EMI निकालें</button>
-    <div id="emi-result"></div>`;
-  }
-},
-// Aur converters/calculators jese Tax Calculator, Age Calculator, CGPA, Fuel, ROI, Change, Compound Interest, Loan Amortization, Length, Area, Volume, Speed, Time, Weight, Temperature, Angle, Data, Power, Energy, Pressure, Frequency, Data Rate Converter banaye ja sakte hain isi tarah
 
-];
-
-const sidebarList = document.getElementById('toolList');
-const mainTitle = document.getElementById('tool-title');
-const mainContent = document.getElementById('tool-content');
-
-let currentTool = 'basic';
-
-function initSidebar() {
-  tools.forEach(tool => {
-    let li = document.createElement('li');
-    let btn = document.createElement('button');
-    btn.innerHTML = tool.icon + `<span>${tool.name}</span>`;
-    btn.id = 'btn_' + tool.id;
-    btn.onclick = () => {
-      if(currentTool !== tool.id) {
-        currentTool = tool.id;
-        updateActive();
-        loadToolContent(tool.id);
-      }
-    };
-    if(tool.id === currentTool) btn.classList.add('active');
-    li.appendChild(btn);
-    sidebarList.appendChild(li);
-  });
-}
-
-function updateActive() {
-  tools.forEach(tool => {
-    let btn = document.getElementById('btn_' + tool.id);
-    if(tool.id === currentTool) btn.classList.add('active');
-    else btn.classList.remove('active');
-  });
-}
-
-function loadToolContent(id) {
-  let tool = tools.find(t => t.id === id);
-  if(!tool) return;
-  mainTitle.textContent = tool.name;
-  mainContent.innerHTML = tool.load();
-  setupToolLogic(id);
-}
-
-function setupToolLogic(id) {
-  if(id === 'basic') initBasicCalc();
-  else if(id === 'bmi') {}; //already linked, no special setup
-  else if(id === 'percentage') {};
-  else if(id === 'currency') {};
-  else if(id === 'emi') {};
-  // Add more logic setup for other tools here.
-}
-
-// Basic Calculator implementation
-function inputCalc(val) {
-  let display = document.getElementById('display');
-  if(!display) return;
-  if(display.value === '0' || display.value === 'त्रुटि') display.value = '';
-  // Hindi digits to English for eval
-  const hindiToEng = {'०':'0','१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9'};
-  if(/[०-९]/.test(val)) val = hindiToEng[val];
-  display.value += val;
-}
-function clearCalc() {
-  let display = document.getElementById('display');
-  if(!display) return;
-  display.value = '';
-}
-function evaluateCalc() {
-  let display = document.getElementById('display');
-  if(!display) return;
-  try {
-    let val = display.value.replace(/[०-९]/g,d=> {'०':'0','१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9'}[d] || d );
-    let res = eval(val);
-    display.value = res.toString();
-  } catch {
-    display.value = "त्रुटि";
-  }
-}
-// BMI
-function calculateBMI() {
-  let h = parseFloat(document.getElementById('height').value)/100;
-  let w = parseFloat(document.getElementById('weight').value);
-  let output = document.getElementById('bmi-result');
-  if(!h || h <= 0 || !w || w <= 0) {
-    output.textContent = "कृपया सही मान दर्ज करें।";
-    return;
-  }
-  let bmi = (w/(h*h)).toFixed(2);
-  output.textContent = `आपका BMI: ${bmi}`;
-}
-// Percentage
-function calculatePercentage() {
-  let total = parseFloat(document.getElementById('total-value').value);
-  let part = parseFloat(document.getElementById('part-value').value);
-  let output = document.getElementById('percentage-result');
-  if(isNaN(total) || total <= 0 || isNaN(part) || part < 0) {
-    output.textContent = "कृपया मान सही दर्ज करें।";
-    return;
-  }
-  let percent = ((part/total)*100).toFixed(2);
-  output.textContent = `${part} = ${percent}% (कुल ${total})`;
-}
-// Currency
-function convertCurrency() {
-  let inr = parseFloat(document.getElementById('inr').value);
-  let usdField = document.getElementById('usd');
-  let output = document.getElementById('currency-result');
-  if(isNaN(inr) || inr < 0) {
-    output.textContent = "कृपया सही राशि दर्ज करें।";
-    return;
-  }
-  let usd = (inr * 0.012).toFixed(4);
-  usdField.value = usd;
-  output.textContent = `${inr} INR ≈ ${usd} USD`;
-}
-// EMI
-function calculateEMI() {
-  let P = parseFloat(document.getElementById('loanAmount').value);
-  let R = parseFloat(document.getElementById('interestRate').value);
-  let N = parseInt(document.getElementById('loanTenure').value);
-  let output = document.getElementById('emi-result');
-  if(!P || P <= 0 || !R || R < 0 || !N || N <= 0) {
-    output.textContent = "कृपया सारे मान सही दर्ज करें।";
-    return;
-  }
-  let r = R/(12*100);
-  let emi = (P*r*Math.pow(1+r,N)) / (Math.pow(1+r,N)-1);
-  output.textContent = `महीना EMI: ₹${emi.toFixed(2)}`;
-}
-
-initSidebar();
-loadToolContent(currentTool);
-</script>
-</body>
-</html>
-                        <option value="SGD">SGD - Singapore Dollar</option>
-                    </select>
-                    <input type="number" id="currency-amount" placeholder="Enter amount">
-                    <select id="currency-to-unit">
-                        <option value="USD">USD - US Dollar</option>
-                        <option value="INR">INR - Indian Rupee</option>
-                        <option value="EUR">EUR - Euro</option>
-                        <option value="GBP">GBP - British Pound</option>
-                        <option value="JPY">JPY - Japanese Yen</option>
-                        <option value="AUD">AUD - Australian Dollar</option>
-                        <option value="CAD">CAD - Canadian Dollar</option>
-                        <option value="CHF">CHF - Swiss Franc</option>
-                        <option value="CNY">CNY - Chinese Yuan</option>
-                        <option value="SGD">SGD - Singapore Dollar</option>
-                    </select>
-                    <button onclick="convertCurrency()">Convert</button>
-                </div>
-
-                <!-- Length Converter -->
-                <div class="calculator-section" id="length-section" style="display: none;">
-                    <select id="length-from-unit">
-                        <option value="m">Meter</option>
-                        <option value="km">Kilometer</option>
-                        <option value="cm">Centimeter</option>
-                        <option value="mm">Millimeter</option>
-                        <option value="mi">Mile</option>
-                        <option value="ft">Foot</option>
-                        <option value="in">Inch</option>
-                    </select>
-                    <input type="number" id="length-amount" placeholder="Enter length">
-                    <select id="length-to-unit">
-                        <option value="m">Meter</option>
-                        <option value="km">Kilometer</option>
-                        <option value="cm">Centimeter</option>
-                        <option value="mm">Millimeter</option>
-                        <option value="mi">Mile</option>
-                        <option value="ft">Foot</option>
-                        <option value="in">Inch</option>
-                    </select>
-                    <button onclick="convertLength()">Convert</button>
-                </div>
-
-                <!-- Area Converter -->
-                <div class="calculator-section" id="area-section" style="display: none;">
-                    <select id="area-from-unit">
-                        <option value="sqm">Square Meter</option>
-                        <option value="sqkm">Square Kilometer</option>
-                        <option value="sqft">Square Foot</option>
-                        <option value="sqin">Square Inch</option>
-                        <option value="acre">Acre</option>
-                    </select>
-                    <input type="number" id="area-amount" placeholder="Enter area">
-                    <select id="area-to-unit">
-                        <option value="sqm">Square Meter</option>
-                        <option value="sqkm">Square Kilometer</option>
-                        <option value="sqft">Square Foot</option>
-                        <option value="sqin">Square Inch</option>
-                        <option value="acre">Acre</option>
-                    </select>
-                    <button onclick="convertArea()">Convert</button>
-                </div>
-
-                <!-- Volume Converter -->
-                <div class="calculator-section" id="volume-section" style="display: none;">
-                    <select id="volume-from-unit">
-                        <option value="l">Liter</option>
-                        <option value="ml">Milliliter</option>
-                        <option value="m3">Cubic Meter</option>
-                        <option value="gal">Gallon</option>
-                        <option value="ft3">Cubic Foot</option>
-                    </select>
-                    <input type="number" id="volume-amount" placeholder="Enter volume">
-                    <select id="volume-to-unit">
-                        <option value="l">Liter</option>
-                        <option value="ml">Milliliter</option>
-                        <option value="m3">Cubic Meter</option>
-                        <option value="gal">Gallon</option>
-                        <option value="ft3">Cubic Foot</option>
-                    </select>
-                    <button onclick="convertVolume()">Convert</button>
-                </div>
-
-                <!-- Speed Converter -->
-                <div class="calculator-section" id="speed-section" style="display: none;">
-                    <select id="speed-from-unit">
-                        <option value="mps">Meter/Second</option>
-                        <option value="kmph">Kilometer/Hour</option>
-                        <option value="mph">Mile/Hour</option>
-                        <option value="knot">Knot</option>
-                    </select>
-                    <input type="number" id="speed-amount" placeholder="Enter speed">
-                    <select id="speed-to-unit">
-                        <option value="mps">Meter/Second</option>
-                        <option value="kmph">Kilometer/Hour</option>
-                        <option value="mph">Mile/Hour</option>
-                        <option value="knot">Knot</option>
-                    </select>
-                    <button onclick="convertSpeed()">Convert</button>
-                </div>
-
-                <!-- Time Converter -->
-                <div class="calculator-section" id="time-section" style="display: none;">
-                    <select id="time-from-unit">
-                        <option value="s">Second</option>
-                        <option value="min">Minute</option>
-                        <option value="hr">Hour</option>
-                        <option value="day">Day</option>
-                    </select>
-                    <input type="number" id="time-amount" placeholder="Enter time">
-                    <select id="time-to-unit">
-                        <option value="s">Second</option>
-                        <option value="min">Minute</option>
-                        <option value="hr">Hour</option>
-                        <option value="day">Day</option>
-                    </select>
-                    <button onclick="convertTime()">Convert</button>
-                </div>
-
-                <!-- Weight/Mass Converter -->
-                <div class="calculator-section" id="weight-section" style="display: none;">
-                    <select id="weight-from-unit">
-                        <option value="kg">Kilogram</option>
-                        <option value="g">Gram</option>
-                        <option value="lb">Pound</option>
-                        <option value="oz">Ounce</option>
-                    </select>
-                    <input type="number" id="weight-amount" placeholder="Enter weight">
-                    <select id="weight-to-unit">
-                        <option value="kg">Kilogram</option>
-                        <option value="g">Gram</option>
-                        <option value="lb">Pound</option>
-                        <option value="oz">Ounce</option>
-                    </select>
-                    <button onclick="convertWeight()">Convert</button>
-                </div>
-
-                <!-- Temperature Converter -->
-                <div class="calculator-section" id="temperature-section" style="display: none;">
-                    <select id="temperature-from-unit">
-                        <option value="c">Celsius</option>
-                        <option value="f">Fahrenheit</option>
-                        <option value="k">Kelvin</option>
-                    </select>
-                    <input type="number" id="temperature-amount" placeholder="Enter temperature">
-                    <select id="temperature-to-unit">
-                        <option value="c">Celsius</option>
-                        <option value="f">Fahrenheit</option>
-                        <option value="k">Kelvin</option>
-                    </select>
-                    <button onclick="convertTemperature()">Convert</button>
-                </div>
-
-                <!-- Angle Converter -->
-                <div class="calculator-section" id="angle-section" style="display: none;">
-                    <select id="angle-from-unit">
-                        <option value="deg">Degree</option>
-                        <option value="rad">Radian</option>
-                        <option value="grad">Gradian</option>
-                    </select>
-                    <input type="number" id="angle-amount" placeholder="Enter angle">
-                    <select id="angle-to-unit">
-                        <option value="deg">Degree</option>
-                        <option value="rad">Radian</option>
-                        <option value="grad">Gradian</option>
-                    </select>
-                    <button onclick="convertAngle()">Convert</button>
-                </div>
-
-                <!-- Data Converter -->
-                <div class="calculator-section" id="data-section" style="display: none;">
-                    <select id="data-from-unit">
-                        <option value="b">Byte</option>
-                        <option value="kb">Kilobyte</option>
-                        <option value="mb">Megabyte</option>
-                        <option value="gb">Gigabyte</option>
-                        <option value="tb">Terabyte</option>
-                    </select>
-                    <input type="number" id="data-amount" placeholder="Enter data size">
-                    <select id="data-to-unit">
-                        <option value="b">Byte</option>
-                        <option value="kb">Kilobyte</option>
-                        <option value="mb">Megabyte</option>
-                        <option value="gb">Gigabyte</option>
-                        <option value="tb">Terabyte</option>
-                    </select>
-                    <button onclick="convertData()">Convert</button>
-                </div>
-
-                <!-- Power Converter -->
-                <div class="calculator-section" id="power-section" style="display: none;">
-                    <select id="power-from-unit">
-                        <option value="w">Watt</option>
-                        <option value="kw">Kilowatt</option>
-                        <option value="hp">Horsepower</option>
-                    </select>
-                    <input type="number" id="power-amount" placeholder="Enter power">
-                    <select id="power-to-unit">
-                        <option value="w">Watt</option>
-                        <option value="kw">Kilowatt</option>
-                        <option value="hp">Horsepower</option>
-                    </select>
-                    <button onclick="convertPower()">Convert</button>
-                </div>
-
-                <!-- Energy Converter -->
-                <div class="calculator-section" id="energy-section" style="display: none;">
-                    <select id="energy-from-unit">
-                        <option value="j">Joule</option>
-                        <option value="cal">Calorie</option>
-                        <option value="kwh">Kilowatt-hour</option>
-                    </select>
-                    <input type="number" id="energy-amount" placeholder="Enter energy">
-                    <select id="energy-to-unit">
-                        <option value="j">Joule</option>
-                        <option value="cal">Calorie</option>
-                        <option value="kwh">Kilowatt-hour</option>
-                    </select>
-                    <button onclick="convertEnergy()">Convert</button>
-                </div>
-
-                <!-- Pressure Converter -->
-                <div class="calculator-section" id="pressure-section" style="display: none;">
-                    <select id="pressure-from-unit">
-                        <option value="pa">Pascal</option>
-                        <option value="bar">Bar</option>
-                        <option value="psi">PSI</option>
-                    </select>
-                    <input type="number" id="pressure-amount" placeholder="Enter pressure">
-                    <select id="pressure-to-unit">
-                        <option value="pa">Pascal</option>
-                        <option value="bar">Bar</option>
-                        <option value="psi">PSI</option>
-                    </select>
-                    <button onclick="convertPressure()">Convert</button>
-                </div>
-
-                <!-- Frequency Converter -->
-                <div class="calculator-section" id="frequency-section" style="display: none;">
-                    <select id="frequency-from-unit">
-                        <option value="hz">Hertz</option>
-                        <option value="khz">Kilohertz</option>
-                        <option value="mhz">Megahertz</option>
-                    </select>
-                    <input type="number" id="frequency-amount" placeholder="Enter frequency">
-                    <select id="frequency-to-unit">
-                        <option value="hz">Hertz</option>
-                        <option value="khz">Kilohertz</option>
-                        <option value="mhz">Megahertz</option>
-                    </select>
-                    <button onclick="convertFrequency()">Convert</button>
-                </div>
-
-                <!-- Data Rate Converter -->
-                <div class="calculator-section" id="data-rate-section" style="display: none;">
-                    <select id="data-rate-from-unit">
-                        <option value="bps">Bits/second</option>
-                        <option value="mbps">Megabits/second</option>
-                        <option value="gbps">Gigabits/second</option>
-                    </select>
-                    <input type="number" id="data-rate-amount" placeholder="Enter data rate">
-                    <select id="data-rate-to-unit">
-                        <option value="bps">Bits/second</option>
-                        <option value="mbps">Megabits/second</option>
-                        <option value="gbps">Gigabits/second</option>
-                    </select>
-                    <button onclick="convertDataRate()">Convert</button>
-                </div>
-
-                <!-- Financial Calculators -->
-                <div class="calculator-section" id="roi-section" style="display: none;">
-                    <input type="number" id="initial-investment" placeholder="Initial Investment">
-                    <input type="number" id="final-value" placeholder="Final Value">
-                    <button onclick="calculateROI()">Calculate ROI</button>
-                </div>
-
-                <div class="calculator-section" id="percent-change-section" style="display: none;">
-                    <input type="number" id="initial-value" placeholder="Initial Value">
-                    <input type="number" id="final-value" placeholder="Final Value">
-                    <button onclick="calculatePercentChange()">Calculate % Change</button>
-                </div>
-
-                <div class="calculator-section" id="compound-section" style="display: none;">
-                    <input type="number" id="compound-principal" placeholder="Principal Amount">
-                    <input type="number" id="compound-rate" placeholder="Annual Interest Rate (%)">
-                    <input type="number" id="compound-time" placeholder="Time (years)">
-                    <select id="compound-frequency">
-                        <option value="12">Monthly</option>
-                        <option value="4">Quarterly</option>
-                        <option value="1">Annually</option>
-                    </select>
-                    <button onclick="calculateCompoundInterest()">Calculate</button>
-                </div>
-
-                <div class="calculator-section" id="amortization-section" style="display: none;">
-                    <input type="number" id="amortization-principal" placeholder="Loan Amount">
-                    <input type="number" id="amortization-rate" placeholder="Annual Interest Rate (%)">
-                    <input type="number" id="amortization-tenure" placeholder="Tenure (months)">
-                    <button onclick="calculateAmortization()">Calculate</button>
-                </div>
-
-                <!-- Existing Calculators -->
-                <div class="calculator-section" id="bmi-section" style="display: none;">
-                    <input type="number" id="bmi-weight" placeholder="Weight (kg)">
-                    <input type="number" id="bmi-height" placeholder="Height (m)">
-                    <button onclick="calculateBMI()">Calculate BMI</button>
-                </div>
-                <div class="calculator-section" id="percentage-section" style="display: none;">
-                    <input type="number" id="percent-value" placeholder="Value">
-                    <input type="number" id="percent-total" placeholder="Total">
-                    <button onclick="calculatePercentage()">Calculate %</button>
-                </div>
-                <div class="calculator-section" id="emi-section" style="display: none;">
-                    <input type="number" id="emi-principal" placeholder="Loan Amount">
-                    <input type="number" id="emi-rate" placeholder="Interest Rate (%)">
-                    <input type="number" id="emi-tenure" placeholder="Tenure (months)">
-                    <button onclick="calculateEMI()">Calculate EMI</button>
-                </div>
-                <div class="calculator-section" id="tax-section" style="display: none;">
-                    <input type="number" id="tax-amount" placeholder="Amount">
-                    <input type="number" id="tax-rate" placeholder="Tax Rate (%)">
-                    <button onclick="calculateTax()">Calculate Tax</button>
-                </div>
-                <div class="calculator-section" id="age-section" style="display: none;">
-                    <input type="date" id="age-dob" placeholder="Date of Birth">
-                    <button onclick="calculateAge()">Calculate Age</button>
-                </div>
-                <div class="calculator-section" id="cgpa-section" style="display: none;">
-                    <input type="number" id="cgpa-marks" placeholder="Total Marks">
-                    <input type="number" id="cgpa-total" placeholder="Max Marks">
-                    <button onclick="calculateCGPA()">Calculate CGPA</button>
-                </div>
-                <div class="calculator-section" id="fuel-section" style="display: none;">
-                    <input type="number" id="fuel-distance" placeholder="Distance (km)">
-                    <input type="number" id="fuel-efficiency" placeholder="Efficiency (km/l)">
-                    <input type="number" id="fuel-price" placeholder="Fuel Price (per liter)">
-                    <button onclick="calculateFuelCost()">Calculate Fuel Cost</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
